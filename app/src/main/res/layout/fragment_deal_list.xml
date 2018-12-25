@@ -1,0 +1,22 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.target.dealbrowserpoc.dealbrowser.DealListViewModel"/>
+
+        <variable
+            name="viewModelDeal"
+            type="com.target.dealbrowserpoc.dealbrowser.DealListViewModel"/>
+
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deal_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/deal_list_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</layout>

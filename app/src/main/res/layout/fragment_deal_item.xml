@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.target.dealbrowserpoc.dealbrowser.DealListViewModel"/>
+
+        <variable
+            name="viewModelItem"
+            type="com.target.dealbrowserpoc.dealbrowser.DealItemViewModel"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/deal_item_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHeight_percent=".55"/>
+
+        <TextView
+            android:id="@+id/deal_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:text="Sample Text"
+            android:contentDescription="price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deal_item_image"/>
+
+        <TextView
+            android:id="@+id/deal_item_reg_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:text="Reg: "
+            android:contentDescription="regular"
+            app:layout_constraintEnd_toStartOf="@id/deal_item_reg"
+            app:layout_constraintTop_toBottomOf="@id/deal_item_image"/>
+
+        <TextView
+            android:id="@+id/deal_item_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:text="Sample Text"
+            android:contentDescription="regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deal_item_image"/>
+
+        <View
+            android:id="@+id/reg_divider"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:background="@drawable/gray_color"
+            app:layout_constraintStart_toStartOf="@id/deal_item_reg"
+            app:layout_constraintEnd_toEndOf="@id/deal_item_reg"
+            app:layout_constraintTop_toTopOf="@id/deal_item_reg"
+            app:layout_constraintBottom_toBottomOf="@id/deal_item_reg"/>
+
+        <TextView
+            android:id="@+id/deal_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:text="Sample Text"
+            android:contentDescription="title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deal_item_price"/>
+
+        <TextView
+            android:id="@+id/deal_item_desc"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/darker_gray"
+            android:maxLines="6"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:text="Sample Text"
+            android:contentDescription="description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintTop_toBottomOf="@id/deal_item_title"/>
+
+        <TextView
+            android:id="@+id/deal_item_add_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textColor="@android:color/black"
+            android:background="@android:color/darker_gray"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="add to list"
+            android:contentDescription="list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintWidth_percent=".5"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/deal_item_add_cart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_dark"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="add to cart"
+            android:contentDescription="cart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintWidth_percent=".5"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "com.target.dealbrowserpoc.dealbrowser"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    dataBinding.enabled = true
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${rootProject.ext.daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${rootProject.ext.daggerVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.daggerVersion}"
+
+    //The SupportLib stuff
+    api "androidx.appcompat:appcompat:${rootProject.ext.xAppCompatVersion}"
+    api "com.google.android.material:material:${rootProject.ext.xMaterialVersion}"
+    api "androidx.browser:browser:${rootProject.ext.xBrowserVersion}"
+    api "androidx.constraintlayout:constraintlayout:${rootProject.ext.xConstraintLayoutVersion}"
+    api "androidx.multidex:multidex:${rootProject.ext.xMultidexVersion}"
+    api "androidx.annotation:annotation:${rootProject.ext.xAnnotationVersion}"
+    api "androidx.preference:preference:${rootProject.ext.xPreferenceVersion}"
+
+    //OkHttp, Retrofit, Moshi, Picasso
+    implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:${rootProject.ext.okHttpVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okHttpVersion}"
+    implementation "com.squareup.moshi:moshi:${rootProject.ext.moshiVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-moshi:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-simplexml:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.picasso:picasso:${rootProject.ext.picassoVersion}"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:${rootProject.ext.downloaderVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.gsonRetroVersion}"
+
+    // Play Services
+
+//        api "com.google.android.gms:play-services-auth:${rootProject.ext.playServicesAuthVersion}"
+//    api "com.google.android.gms:play-services-ads:${rootProject.ext.playServicesVersion}"
+//    api "com.google.android.gms:play-services-location:${rootProject.ext.playServicesLocation}"
+//    api "androidx.media:media:${rootProject.ext.xMediaVersion}"
+
+    // Lifecycle, LiveData and ViewModel
+    api "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.xArchLifecycleVersion}"
+    api "androidx.lifecycle:lifecycle-common-java8:${rootProject.ext.xArchLifecycleVersion}"
+
+    // Room
+    implementation "androidx.room:room-runtime:${rootProject.ext.xRoomVersion}"
+    kapt "androidx.room:room-compiler:${rootProject.ext.xRoomVersion}"
+    api "androidx.room:room-migration:${rootProject.ext.xRoomVersion}"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime:${rootProject.ext.xPagingVersion}"
+
+    // For controlling LiveData background threads in your tests
+    testImplementation "androidx.arch.core:core-testing:${rootProject.ext.xArchLifecycleVersion}"
+    testImplementation "androidx.room:room-testing:${rootProject.ext.xRoomVersion}"
+
+    //Apache
+    implementation "org.apache.commons:commons-lang3:${rootProject.ext.apacheCommons}"
+
+    // Testing
+    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
+    androidTestImplementation "androidx.test:runner:${rootProject.ext.runnerVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.ext.espressoVersion}"
+
+//    //Jacapps Libs
+//    implementation("com.jacapps:exoMediaService:${rootProject.ext.jacappsExoMediaServiceVersion}") {
+//        changing = true
+//    }
+
+//    //Glide
+//    implementation('com.github.bumptech.glide:glide:4.8.0') {
+//        exclude group: "com.android.support"
+//    }
+    implementation "com.android.support:support-fragment:${rootProject.ext.glideVersion}"
+
+    //Exoplayer
+//    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
+//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
+//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
+//    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
+//    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+}
+
