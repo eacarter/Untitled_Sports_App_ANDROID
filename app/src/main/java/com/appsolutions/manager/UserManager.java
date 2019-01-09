@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -21,7 +23,8 @@ public class UserManager {
 
     private Context context;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
+//    private FirebaseUser firebaseUser;
+    private MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
 
     @Inject
     public UserManager(Context context) {
@@ -29,7 +32,7 @@ public class UserManager {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public FirebaseUser getUser(){
+    public LiveData<FirebaseUser> getUser(){
         return firebaseUser;
     }
 
@@ -43,7 +46,7 @@ public class UserManager {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful() && task.isComplete()) {
-                            firebaseUser = firebaseAuth.getCurrentUser();
+                            firebaseUser.setValue(firebaseAuth.getCurrentUser());
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(activity, "Authentication failed.",
@@ -60,7 +63,7 @@ public class UserManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful() && task.isComplete()) {
                             Log.d(TAG, "createUserWithEmail:success");
-                            firebaseUser = firebaseAuth.getCurrentUser();
+                            firebaseUser.setValue(firebaseAuth.getCurrentUser());
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

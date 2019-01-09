@@ -1,9 +1,11 @@
 package com.appsolutions.login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentLoginBinding;
@@ -17,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
 
-public class LoginFragment extends DaggerFragment {
+public class LoginFragment extends DaggerFragment{
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -60,6 +62,24 @@ public class LoginFragment extends DaggerFragment {
                 R.layout.fragment_login, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
+
+        binding.loginSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.login(binding.loginEmail.getText().toString(),
+                        binding.loginPass.getText().toString(),
+                        getActivity());
+
+                if(viewModel.getUser().getValue() != null){
+                    Log.d("Login", "Youve successfully logged in");
+                }
+                else{
+                    Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
         return binding.getRoot();
     }
