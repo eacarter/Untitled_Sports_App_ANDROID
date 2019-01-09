@@ -64,7 +64,7 @@ dependencies {
 
 //        api "com.google.android.gms:play-services-auth:${rootProject.ext.playServicesAuthVersion}"
 //    api "com.google.android.gms:play-services-ads:${rootProject.ext.playServicesVersion}"
-//    api "com.google.android.gms:play-services-location:${rootProject.ext.playServicesLocation}"
+    api "com.google.android.gms:play-services-location:${rootProject.ext.playServicesLocation}"
 //    api "androidx.media:media:${rootProject.ext.xMediaVersion}"
 
     // Lifecycle, LiveData and ViewModel
