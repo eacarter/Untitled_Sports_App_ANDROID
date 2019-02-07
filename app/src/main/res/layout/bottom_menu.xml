@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.appsolutions.MainViewModel"/>
+        <variable
+            name="viewModel"
+            type="com.appsolutions.MainViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/darker_gray">
+
+        <ImageButton
+            android:id="@+id/menu_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@null"
+            android:background="@null"
+            android:hapticFeedbackEnabled="true"
+            android:contentDescription="@null"
+            app:selected="@{safeUnbox(viewModel.selectedTab) == MainViewModel.VIEW_HOME}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/menu_27"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/menu_27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@null"
+            android:background="@null"
+            android:hapticFeedbackEnabled="true"
+            android:contentDescription="@null"
+            app:selected="@{safeUnbox(viewModel.selectedTab) == MainViewModel.VIEW_27}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/menu_home"
+            app:layout_constraintRight_toLeftOf="@+id/menu_audio"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/menu_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@null"
+            android:background="@null"
+            android:hapticFeedbackEnabled="true"
+            android:contentDescription="@null"
+            app:selected="@{safeUnbox(viewModel.selectedTab) == MainViewModel.VIEW_AUDIO}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/menu_27"
+            app:layout_constraintRight_toRightOf="@id/menu_video"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/menu_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@null"
+            android:background="@null"
+            android:hapticFeedbackEnabled="true"
+            android:contentDescription="@null"
+            app:selected="@{safeUnbox(viewModel.selectedTab) == MainViewModel.VIEW_VIDEO}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/menu_audio"
+            app:layout_constraintRight_toRightOf="@id/menu_more"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/menu_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@null"
+            android:background="@null"
+            android:hapticFeedbackEnabled="true"
+            android:contentDescription="@null"
+            app:selected="@{safeUnbox(viewModel.selectedTab) == MainViewModel.VIEW_MORE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/menu_video"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

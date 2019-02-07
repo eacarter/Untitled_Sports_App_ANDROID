@@ -1,9 +1,12 @@
 package com.appsolutions.login;
 
 import android.app.Activity;
+import android.util.Log;
 
+import com.appsolutions.R;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.widget.BaseViewModel;
+import com.facebook.AccessToken;
 import com.google.firebase.auth.FirebaseUser;
 
 import javax.inject.Inject;
@@ -29,6 +32,14 @@ public class LoginViewModel extends BaseViewModel {
 
     public void login(String email, String pass, Activity activity){
         userManager.SignIn(email, pass, activity);
+    }
+
+    public void register(String email, String pass, Activity activity){
+        userManager.Register(email, pass, activity);
+    }
+
+    public void facebookLogin(AccessToken accessToken, Activity activity){
+        userManager.handleFacebookAccessToken(accessToken, activity);
     }
 
     public LiveData<FirebaseUser> getUser(){

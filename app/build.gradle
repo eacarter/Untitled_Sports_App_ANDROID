@@ -37,6 +37,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android:${rootProject.ext.daggerVersion}"
     implementation "com.google.dagger:dagger-android-support:${rootProject.ext.daggerVersion}"
     kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.daggerVersion}"
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
 
     //The SupportLib stuff
     api "androidx.appcompat:appcompat:${rootProject.ext.xAppCompatVersion}"
@@ -111,6 +112,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

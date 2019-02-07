@@ -18,24 +18,32 @@
         <EditText
             android:id="@+id/login_email"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:hint="Email"
+            android:padding="10dp"
             android:inputType="textEmailAddress"
+            android:background="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent=".9"
+            app:layout_constraintHeight_percent=".09"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <EditText
             android:id="@+id/login_pass"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:padding="10dp"
+
             android:hint="Password"
+            android:background="@android:color/darker_gray"
             android:inputType="textPassword"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent=".9"
+            app:layout_constraintHeight_percent=".09"
             app:layout_constraintTop_toBottomOf="@id/login_email"/>
 
         <Button
@@ -48,6 +56,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent=".5"
             app:layout_constraintTop_toBottomOf="@id/login_pass"/>
+
+        <TextView
+            android:id="@+id/login_register"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Sign Up"
+            android:gravity="center"
+            android:background="@android:color/darker_gray"
+            android:textSize="25dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent=".1"/>
+
 
 
 

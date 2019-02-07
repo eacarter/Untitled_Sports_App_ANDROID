@@ -1,11 +1,16 @@
 package com.appsolutions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.appsolutions.databinding.ActivityMainBinding;
 import com.appsolutions.login.LoginFragment;
+import com.appsolutions.manager.DatabaseManager;
+import com.appsolutions.manager.LocationManager;
+import com.appsolutions.manager.UserManager;
+import com.facebook.CallbackManager;
 
 import java.util.concurrent.Executor;
 
@@ -24,9 +29,19 @@ public class MainActivity extends DaggerAppCompatActivity {
     LibApplication application;
 
     @Inject
+    UserManager userManager;
+
+    @Inject
+    LocationManager locationManager;
+
+    @Inject
+    DatabaseManager databaseManager;
+
+    @Inject
     Executor executor;
 
     private ActivityMainBinding binding;
+    private CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +51,19 @@ public class MainActivity extends DaggerAppCompatActivity {
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new LoginFragment())
-                .commit();
+        userManager.getUser().observe(this, user ->{
+
+            if(user == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new LoginFragment(), "Login")
+                        .commit();
+            }
+            else{
+                getSupportFragmentManager().beginTransaction()
+                        .remove(getSupportFragmentManager().findFragmentByTag("Login"))
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -56,6 +81,19 @@ public class MainActivity extends DaggerAppCompatActivity {
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 //    @Override
