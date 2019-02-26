@@ -1,26 +1,32 @@
-package com.appsolutions.login;
+package com.appsolutions.register;
 
 import android.app.Activity;
-import android.util.Log;
+import android.location.Location;
 
-import com.appsolutions.R;
+import com.appsolutions.manager.DatabaseManager;
+import com.appsolutions.manager.LocationManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-public class LoginViewModel extends BaseViewModel {
+public class RegisterViewModel extends BaseViewModel {
 
     private UserManager userManager;
+    private DatabaseManager databaseManager;
     private UserMediatorLiveData userMediatorLiveData;
+    private LocationManager locationManager;
 
     @Inject
-    public LoginViewModel(UserManager userManager){
+    public RegisterViewModel(UserManager userManager, DatabaseManager databaseManager, LocationManager locationManager){
         this.userManager = userManager;
+        this.databaseManager = databaseManager;
+        this.locationManager = locationManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
     }
 
@@ -29,12 +35,20 @@ public class LoginViewModel extends BaseViewModel {
 
     }
 
-    public void login(String email, String pass, Activity activity){
-        userManager.SignIn(email, pass, activity);
+    public void setLocation(Activity activity){
+        locationManager.getLastKnownLocation(activity);
+    }
+
+    public LiveData<Location> getLocation(){
+        return locationManager.getLocation();
     }
 
     public void register(String email, String pass, Activity activity){
         userManager.Register(email, pass, activity);
+    }
+
+    public DocumentReference createUser(FirebaseUser user){
+        return databaseManager.updateUser(user);
     }
 
     public LiveData<FirebaseUser> getUser(){

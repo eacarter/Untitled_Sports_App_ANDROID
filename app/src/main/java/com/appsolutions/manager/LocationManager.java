@@ -1,16 +1,28 @@
 package com.appsolutions.manager;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.util.Log;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class LocationManager {
@@ -20,9 +32,10 @@ public class LocationManager {
     private MutableLiveData<Double> latitude;
     private MutableLiveData<Location> location;
     private Context context;
+    private SharedPreferences sharedPreferences;
 
     @Inject
-    public LocationManager(Context context){
+    public LocationManager(Context context) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         this.context = context;
         longitude = new MutableLiveData<>();
@@ -30,19 +43,47 @@ public class LocationManager {
         location = new MutableLiveData<>();
     }
 
-    @SuppressWarnings("MissingPermission")
+
     public void getLastKnownLocation(Activity activity) {
 
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(activity, new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
 
-                if(task.isSuccessful() && task.getResult() != null) {
+                if (task.isSuccessful() && task.getResult() != null) {
                     longitude.setValue(task.getResult().getLatitude());
                     latitude.setValue(task.getResult().getLongitude());
                     location.setValue(task.getResult());
+
+                    try {
+
+                        Geocoder gcd = new Geocoder(activity, Locale.getDefault());
+                        List<Address> addresses = gcd.getFromLocation(task.getResult().getLatitude(), task.getResult().getLongitude(), 1);
+
+                        Log.d("Location", latitude + ", " + longitude);
+
+                        if (addresses.size() > 0) {
+                            SharedPreferences.Editor editor = context.getSharedPreferences("Location", Context.MODE_PRIVATE).edit();
+                            editor.putString("city", addresses.get(0).getLocality());
+                            editor.putString("state", addresses.get(0).getAdminArea());
+                            editor.putString("zip", addresses.get(0).getPostalCode());
+                            editor.putFloat("latitude", (float) task.getResult().getLatitude());
+                            editor.putFloat("longitude", (float) task.getResult().getLongitude());
+                            editor.commit();
+                        }
+                    } catch (IOException e) {
+                        Log.d("Registration", e.getMessage());
+                    }
+                } else {
+                    Log.d("Task", task.getException().getMessage());
                 }
             }
+
+
         });
+    }
+
+    public LiveData<Location> getLocation(){
+        return location;
     }
 }

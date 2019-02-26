@@ -1,6 +1,10 @@
 package com.appsolutions.di;
 
+import com.appsolutions.MainViewModel;
 import com.appsolutions.login.LoginViewModel;
+import com.appsolutions.register.RegisterAdditionalViewModel;
+import com.appsolutions.register.RegisterPhotoViewModel;
+import com.appsolutions.register.RegisterViewModel;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,8 +31,28 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(MainViewModel.class)
+    abstract ViewModel bindMainViewModel(MainViewModel mainViewModel);
+
+    @Binds
+    @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RegisterViewModel.class)
+    abstract ViewModel bindRegisterViewModel(RegisterViewModel registerViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RegisterAdditionalViewModel.class)
+    abstract ViewModel bindRegisterAdditionalViewModel(RegisterAdditionalViewModel registerAdditionalViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RegisterPhotoViewModel.class)
+    abstract ViewModel bindRegisterPhotoViewModel(RegisterPhotoViewModel registerPhotoViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory viewModelFactory);

@@ -9,11 +9,7 @@ import android.widget.Toast;
 
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentLoginBinding;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.appsolutions.register.RegisterFragment;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -36,7 +32,6 @@ public class LoginFragment extends DaggerFragment{
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
-    private CallbackManager mCallbackManager;
 
     @Inject
     public LoginFragment() {
@@ -81,7 +76,9 @@ public class LoginFragment extends DaggerFragment{
 
                 viewModel.getUser().observe(lifecycleOwner, firebaseUser -> {
                     if(firebaseUser != null){
-                        Log.d("Login", "You've successfully logged in");
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .remove(getActivity().getSupportFragmentManager().findFragmentByTag("Login"))
+                                .commit();
                     }
                     else{
                         Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
@@ -94,44 +91,23 @@ public class LoginFragment extends DaggerFragment{
         binding.loginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.register(binding.loginEmail.getText().toString(),
-                        binding.loginPass.getText().toString(),
-                        getActivity());
-                viewModel.getUser().observe(lifecycleOwner, firebaseUser -> {
-                    if(firebaseUser != null){
-                        Log.d("Login", "You've successfully logged in");
-                    }
-                    else{
-                        Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                viewModel.register(binding.loginEmail.getText().toString(),
+//                        binding.loginPass.getText().toString(),
+//                        getActivity());
+//                viewModel.getUser().observe(lifecycleOwner, firebaseUser -> {
+//                    if(firebaseUser != null){
+//                        Log.d("Login", "You've successfully logged in");
+//                    }
+//                    else{
+//                        Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.login_container, new RegisterFragment(), "Register")
+                        .addToBackStack("Register")
+                        .commit();
             }
         });
-
-        mCallbackManager = CallbackManager.Factory.create();
-//        LoginButton loginButton = findViewById(R.id.buttonFacebookLogin);
-//        loginButton.setReadPermissions("email", "public_profile");
-//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d("Login", "facebook:onSuccess:" + loginResult);
-//                viewModel.facebookLogin(loginResult.getAccessToken(), getActivity());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d("Login", "facebook:onCancel");
-//                // ...
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d("Login", "facebook:onError", error);
-//                // ...
-//            }
-//        });
-
-
 
         return binding.getRoot();
     }
