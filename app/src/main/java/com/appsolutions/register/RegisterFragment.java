@@ -144,7 +144,7 @@ public class RegisterFragment extends DaggerFragment{
                 adapter.addAll(makeWeight());
 
                 AlertDialog.Builder height = new AlertDialog.Builder(getContext());
-                height.setTitle("Enter your height: ");
+                height.setTitle("Enter your weight: ");
                 height.setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -165,34 +165,34 @@ public class RegisterFragment extends DaggerFragment{
         binding.loginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                viewModel.register(binding.registerEmail.getText().toString(),
-//                        binding.registerPass.getText().toString(),
-//                        getActivity());
-//                viewModel.getUser().observe(lifecycleOwner, firebaseUser -> {
-//                    if(firebaseUser != null){
-//
-//                        if(binding.registerFirstName.getText().toString().isEmpty() ||
-//                                binding.registerLastName.getText().toString().isEmpty() ||
-//                                binding.registerCity.getText().toString().isEmpty() ||
-//                                binding.registerState.getText().toString().isEmpty()||
-//                                binding.registerZip.getText().toString().isEmpty()){
-//                            errorDialog(getActivity());
-//                        }
-//                        else {
-//                            Map<String, Object> userInitInfo = new HashMap<>();
-//                            userInitInfo.put("First Name", binding.registerFirstName.getText().toString());
-//                            userInitInfo.put("Last Name", binding.registerLastName.getText().toString());
-//                            userInitInfo.put("city", binding.registerCity.getText().toString());
-//                            userInitInfo.put("state", binding.registerState.getText().toString());
-//                            userInitInfo.put("zipcode", binding.registerZip.getText().toString());
-//                            userInitInfo.put("latitude", latitude);
-//                            userInitInfo.put("longitude", longitude);
-//                            viewModel.createUser(firebaseUser).update(userInitInfo);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.login_container, new RegisterPhotoFragment(), "RegisterPhoto")
-                                    .addToBackStack("RegisterPhoto")
-                                    .commit();
-//                        }
+
+                        if(binding.registerFirstName.getText().toString().isEmpty() ||
+                                binding.registerLastName.getText().toString().isEmpty() ||
+                                binding.registerCity.getText().toString().isEmpty() ||
+                                binding.registerState.getText().toString().isEmpty()||
+                                binding.registerZip.getText().toString().isEmpty()){
+                            errorDialog(getActivity());
+                        }
+                        else {
+                            Map<String, Object> userInitInfo = new HashMap<>();
+                            userInitInfo.put("First Name", binding.registerFirstName.getText().toString());
+                            userInitInfo.put("Last Name", binding.registerLastName.getText().toString());
+                            userInitInfo.put("city", binding.registerCity.getText().toString());
+                            userInitInfo.put("state", binding.registerState.getText().toString());
+                            userInitInfo.put("zipcode", binding.registerZip.getText().toString());
+                            userInitInfo.put("age", binding.registerAge.getText().toString());
+                            userInitInfo.put("gender", binding.registerGender.getSelectedItem().toString());
+                            userInitInfo.put("height", binding.registerHeight.getText().toString());
+                            userInitInfo.put("weight", binding.registerWeight.getText().toString());
+                            userInitInfo.put("dominant-hand", binding.registerHand.getSelectedItem().toString());
+                            userInitInfo.put("latitude", latitude);
+                            userInitInfo.put("longitude", longitude);
+
+                            viewModel.register(binding.registerEmail.getText().toString(),
+                                    binding.registerPass.getText().toString(), userInitInfo,
+                                    getActivity(), getActivity().getSupportFragmentManager());
+
+                        }
 //                    }
 //                    else{
 //                        Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();

@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentRegisterPhotoBinding;
 import com.appsolutions.manager.LocationManager;
+import com.appsolutions.manager.UserManager;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -54,6 +56,8 @@ public class RegisterPhotoFragment extends DaggerFragment {
     @Inject
     Picasso picasso;
 
+
+
     private FragmentRegisterPhotoBinding binding;
     private RegisterPhotoViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
@@ -61,11 +65,9 @@ public class RegisterPhotoFragment extends DaggerFragment {
     private static final String PHOTO_DIRECTORY = "PhotoFiles";
     private String _filePath;
     private String mCurrentPhotoPath;
+    private FirebaseUser firebaseUser;
+    private Uri photoURI;
 
-    @Inject
-    public RegisterPhotoFragment() {
-        //Required empty public constructor
-    }
 
     public static RegisterPhotoFragment getInstance() {
         return new RegisterPhotoFragment();
@@ -74,7 +76,6 @@ public class RegisterPhotoFragment extends DaggerFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -86,6 +87,7 @@ public class RegisterPhotoFragment extends DaggerFragment {
 
         _filePath = new File(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) ?
                 getContext().getExternalFilesDir(null) : getContext().getFilesDir(), PHOTO_DIRECTORY).getPath();
+
 
 
         binding.setViewModelRegisterPhoto(viewModel);
@@ -100,6 +102,8 @@ public class RegisterPhotoFragment extends DaggerFragment {
                 R.layout.fragment_register_photo, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
+
+
 
         binding.registerGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,13 +127,14 @@ public class RegisterPhotoFragment extends DaggerFragment {
                     }
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        photoURI = FileProvider.getUriForFile(getContext(),
                                 "com.appsolutions.library",
                                 photoFile);
+
+
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, 10);
                     }
-
                 }
 
             }
@@ -141,6 +146,11 @@ public class RegisterPhotoFragment extends DaggerFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 10 && resultCode == RESULT_OK) {
             lastRecordingPath = mCurrentPhotoPath;
+            viewModel.getUser().observe(lifecycleOwner, user ->{
+                if(user != null) {
+                    viewModel.uploadPhoto(photoURI, user);
+                }
+            });
             setPic();
         }
         else if(requestCode == 12 && resultCode == RESULT_OK){
@@ -150,9 +160,15 @@ public class RegisterPhotoFragment extends DaggerFragment {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedMediaUri);
                     binding.registerImage.setImageBitmap(bitmap);
                     lastRecordingPath = getRealPathFromUriForImagesAndVideo(selectedMediaUri);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                viewModel.getUser().observe(lifecycleOwner, user ->{
+                    if(user != null) {
+                        viewModel.uploadPhoto(selectedMediaUri, user);
+                    }
+                });
             }
         }
     }

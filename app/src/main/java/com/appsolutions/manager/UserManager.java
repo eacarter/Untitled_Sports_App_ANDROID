@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.appsolutions.R;
+import com.appsolutions.register.RegisterPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -14,10 +16,13 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -30,6 +35,7 @@ public class UserManager {
     private DatabaseManager databaseManager;
     //    private FirebaseUser firebaseUser;
     private MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
+    private MutableLiveData<FirebaseAuth> firebaseAuthMute = new MutableLiveData<>();
 
     @Inject
     public UserManager(Context context, DatabaseManager databaseManager) {
@@ -39,6 +45,7 @@ public class UserManager {
     }
 
     public LiveData<FirebaseUser> getUser(){
+        firebaseUser.setValue(firebaseAuth.getCurrentUser());
         return firebaseUser;
     }
 
@@ -63,7 +70,7 @@ public class UserManager {
                 });
     }
 
-    public void Register(String email, String password, Activity activity){
+    public void Register(String email, String password, Map<String, Object> map, Activity activity, FragmentManager manager){
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,6 +79,13 @@ public class UserManager {
                             Log.d(TAG, "createUserWithEmail:success");
                             databaseManager.initializeUser(firebaseAuth.getCurrentUser());
                             firebaseUser.setValue(firebaseAuth.getCurrentUser());
+
+                            databaseManager.updateUser(firebaseAuth.getCurrentUser()).update(map);
+
+                            manager.beginTransaction()
+                                    .replace(R.id.login_container, new RegisterPhotoFragment(), "RegisterPhoto")
+                                    .addToBackStack("RegisterPhoto")
+                                    .commit();
                         } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(activity, "Authentication failed.",

@@ -91,20 +91,15 @@ public class DatabaseManager {
                 @Override
                 public void onComplete(Task<UploadTask.TaskSnapshot> task) {
                     if(task.isSuccessful()){
+                        StorageReference storage = storageReference.child("profile_images/" + user.getUid().toString());
+                        storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                updateUser(user).update("image", uri.toString());
+                            }
+                        });
                         Toast.makeText(context, "file Uploaded", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-        }
-    }
-
-    public void getUrl(FirebaseUser user){
-        if(user != null){
-            StorageReference storage = storageReference.child("profile_images/" + user.getUid().toString());
-            storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-
                 }
             });
         }

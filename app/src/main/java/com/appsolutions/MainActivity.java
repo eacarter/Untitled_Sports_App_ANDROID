@@ -69,9 +69,9 @@ public class MainActivity extends DaggerAppCompatActivity {
 
         activity = this;
 
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.login_container, new LoginFragment(), "Login")
-//                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.login_container, new RegisterFragment(), "Login")
+                .commit();
 //
 //        userManager.getUser().observe(this, user -> {
 //            if(user != null){

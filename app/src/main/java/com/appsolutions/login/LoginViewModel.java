@@ -33,9 +33,9 @@ public class LoginViewModel extends BaseViewModel {
         userManager.SignIn(email, pass, activity);
     }
 
-    public void register(String email, String pass, Activity activity){
-        userManager.Register(email, pass, activity);
-    }
+//    public void register(String email, String pass, Activity activity){
+//        userManager.Register(email, pass, activity);
+//    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

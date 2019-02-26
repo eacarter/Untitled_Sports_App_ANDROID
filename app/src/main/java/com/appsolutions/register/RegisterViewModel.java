@@ -10,8 +10,11 @@ import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -43,8 +46,8 @@ public class RegisterViewModel extends BaseViewModel {
         return locationManager.getLocation();
     }
 
-    public void register(String email, String pass, Activity activity){
-        userManager.Register(email, pass, activity);
+    public void register(String email, String pass, Map<String, Object> map, Activity activity, FragmentManager fragmentManager){
+        userManager.Register(email, pass, map, activity, fragmentManager);
     }
 
     public DocumentReference createUser(FirebaseUser user){
