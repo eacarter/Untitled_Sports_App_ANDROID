@@ -74,7 +74,7 @@
             android:id="@+id/register_next_additional"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="Next"
+            android:text="Finish"
             android:gravity="center"
             android:background="@android:color/darker_gray"
             android:textSize="25dp"

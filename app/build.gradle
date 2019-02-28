@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.appsolutions"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
@@ -63,10 +63,12 @@ dependencies {
 
     // Play Services
 
-//        api "com.google.android.gms:play-services-auth:${rootProject.ext.playServicesAuthVersion}"
-//    api "com.google.android.gms:play-services-ads:${rootProject.ext.playServicesVersion}"
+    //        api "com.google.android.gms:play-services-auth:${rootProject.ext.playServicesAuthVersion}"
+
+    //    api "com.google.android.gms:play-services-ads:${rootProject.ext.playServicesVersion}"
     api "com.google.android.gms:play-services-location:${rootProject.ext.playServicesLocation}"
-//    api "androidx.media:media:${rootProject.ext.xMediaVersion}"
+
+    //    api "androidx.media:media:${rootProject.ext.xMediaVersion}"
 
     // Lifecycle, LiveData and ViewModel
     api "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.xArchLifecycleVersion}"
@@ -92,15 +94,21 @@ dependencies {
     androidTestImplementation "androidx.test:runner:${rootProject.ext.runnerVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.ext.espressoVersion}"
 
-//    //Jacapps Libs
-//    implementation("com.jacapps:exoMediaService:${rootProject.ext.jacappsExoMediaServiceVersion}") {
-//        changing = true
-//    }
+    //    //Jacapps Libs
 
-//    //Glide
-//    implementation('com.github.bumptech.glide:glide:4.8.0') {
-//        exclude group: "com.android.support"
-//    }
+    //    implementation("com.jacapps:exoMediaService:${rootProject.ext.jacappsExoMediaServiceVersion}") {
+
+    //        changing = true
+
+    //    }
+
+    //    //Glide
+
+    //    implementation('com.github.bumptech.glide:glide:4.8.0') {
+
+    //        exclude group: "com.android.support"
+
+    //    }
     implementation 'androidx.fragment:fragment:1.0.0-beta01'
 
     //Exoplayer
@@ -109,11 +117,9 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
     implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
-
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

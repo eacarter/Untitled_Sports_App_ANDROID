@@ -41,6 +41,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -103,7 +104,17 @@ public class RegisterPhotoFragment extends DaggerFragment {
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
 
-
+        binding.registerNextAdditional.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                for (Fragment fragment: getActivity().getSupportFragmentManager().getFragments()) {
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(getActivity().getSupportFragmentManager().findFragmentByTag("Login"))
+                        .commit();
+            }
+        });
 
         binding.registerGallery.setOnClickListener(new View.OnClickListener() {
             @Override

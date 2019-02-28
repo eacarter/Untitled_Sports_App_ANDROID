@@ -15,11 +15,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/darker_gray">
 
-        <ImageButton
+        <TextView
             android:id="@+id/menu_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@null"
+            android:text="Feed"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:background="@null"
             android:hapticFeedbackEnabled="true"
             android:contentDescription="@null"
@@ -28,10 +31,13 @@
             app:layout_constraintRight_toLeftOf="@+id/menu_27"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/menu_27"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Hoop"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             app:srcCompat="@null"
             android:background="@null"
             android:hapticFeedbackEnabled="true"
@@ -41,10 +47,13 @@
             app:layout_constraintRight_toLeftOf="@+id/menu_audio"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/menu_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             app:srcCompat="@null"
             android:background="@null"
             android:hapticFeedbackEnabled="true"
@@ -54,10 +63,13 @@
             app:layout_constraintRight_toRightOf="@id/menu_video"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/menu_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Notifications"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             app:srcCompat="@null"
             android:background="@null"
             android:hapticFeedbackEnabled="true"
@@ -67,10 +79,13 @@
             app:layout_constraintRight_toRightOf="@id/menu_more"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/menu_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             app:srcCompat="@null"
             android:background="@null"
             android:hapticFeedbackEnabled="true"
