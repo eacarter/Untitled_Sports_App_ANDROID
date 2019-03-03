@@ -1,4 +1,4 @@
-package com.appsolutions.setting;
+package com.appsolutions.profile;
 
 import android.app.Activity;
 
@@ -11,13 +11,13 @@ import javax.inject.Inject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-public class SettingsViewModel extends BaseViewModel {
+public class ProfileViewModel extends BaseViewModel {
 
     private UserManager userManager;
     private UserMediatorLiveData userMediatorLiveData;
 
     @Inject
-    public SettingsViewModel(UserManager userManager){
+    public ProfileViewModel(UserManager userManager){
         this.userManager = userManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
     }
@@ -30,11 +30,6 @@ public class SettingsViewModel extends BaseViewModel {
     public void login(String email, String pass, Activity activity){
         userManager.SignIn(email, pass, activity);
     }
-
-    public void signOut(){
-        userManager.signOut();
-    }
-
 
 //    public void register(String email, String pass, Activity activity){
 //        userManager.Register(email, pass, activity);

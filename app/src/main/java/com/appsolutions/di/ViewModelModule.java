@@ -1,10 +1,15 @@
 package com.appsolutions.di;
 
 import com.appsolutions.MainViewModel;
+import com.appsolutions.feed.FeedViewModel;
+import com.appsolutions.hoop.HoopViewModel;
 import com.appsolutions.login.LoginViewModel;
+import com.appsolutions.notification.NotifViewModel;
+import com.appsolutions.profile.ProfileViewModel;
 import com.appsolutions.register.RegisterAdditionalViewModel;
 import com.appsolutions.register.RegisterPhotoViewModel;
 import com.appsolutions.register.RegisterViewModel;
+import com.appsolutions.setting.SettingsViewModel;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -53,6 +58,31 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RegisterPhotoViewModel.class)
     abstract ViewModel bindRegisterPhotoViewModel(RegisterPhotoViewModel registerPhotoViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel.class)
+    abstract ViewModel bindSettingsViewModel(SettingsViewModel settingsViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotifViewModel.class)
+    abstract ViewModel bindNotifViewModel(NotifViewModel notifViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FeedViewModel.class)
+    abstract ViewModel bindFeedViewModel(FeedViewModel feedViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HoopViewModel.class)
+    abstract ViewModel bindHoopViewModel(HoopViewModel hoopViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel.class)
+    abstract ViewModel bindProfileViewModel(ProfileViewModel profileViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory viewModelFactory);

@@ -1,4 +1,4 @@
-package com.appsolutions.setting;
+package com.appsolutions.feed;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appsolutions.R;
-import com.appsolutions.databinding.FragmentSettingsBinding;
-import com.appsolutions.login.LoginFragment;
+import com.appsolutions.databinding.FragmentFeedBinding;
+import com.appsolutions.databinding.FragmentNotifBinding;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
 
-public class SettingsFragment extends DaggerFragment implements View.OnClickListener{
+public class FeedFragment extends DaggerFragment{
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -27,17 +27,17 @@ public class SettingsFragment extends DaggerFragment implements View.OnClickList
     @Inject
     Picasso picasso;
 
-    private FragmentSettingsBinding binding;
-    private SettingsViewModel viewModel;
+    private FragmentFeedBinding binding;
+    private FeedViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
 
     @Inject
-    public SettingsFragment() {
+    public FeedFragment() {
         //Required empty public constructor
     }
 
-    public static SettingsFragment getInstance() {
-        return new SettingsFragment();
+    public static FeedFragment getInstance() {
+        return new FeedFragment();
     }
 
     @Override
@@ -49,10 +49,10 @@ public class SettingsFragment extends DaggerFragment implements View.OnClickList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this,
-                viewModelFactory).get(SettingsViewModel.class);
+                viewModelFactory).get(FeedViewModel.class);
         lifecycleOwner = this;
 
-        binding.setViewModelLogin(viewModel);
+        binding.setViewModelFeed(viewModel);
     }
 
     @Override
@@ -61,11 +61,11 @@ public class SettingsFragment extends DaggerFragment implements View.OnClickList
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_settings, container, false);
+                R.layout.fragment_feed, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
 
-        binding.settingsLogout.setOnClickListener(this);
+
 
         return binding.getRoot();
     }
@@ -74,15 +74,5 @@ public class SettingsFragment extends DaggerFragment implements View.OnClickList
     public void onResume() {
         super.onResume();
         viewModel.resume();
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == binding.settingsLogout.getId()){
-            viewModel.signOut();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.login_container, new LoginFragment(), "Login")
-                    .commit();
-        }
     }
 }

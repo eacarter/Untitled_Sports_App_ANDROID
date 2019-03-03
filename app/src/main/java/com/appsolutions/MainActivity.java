@@ -3,35 +3,37 @@ package com.appsolutions;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.appsolutions.databinding.ActivityMainBinding;
+import com.appsolutions.feed.FeedFragment;
+import com.appsolutions.hoop.HoopFragment;
 import com.appsolutions.login.LoginFragment;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.LocationManager;
 import com.appsolutions.manager.UserManager;
-import com.appsolutions.register.RegisterFragment;
-import com.appsolutions.register.RegisterPhotoFragment;
+import com.appsolutions.notification.NotifFragment;
+import com.appsolutions.profile.ProfileFragment;
+import com.appsolutions.setting.SettingsFragment;
 
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.support.DaggerFragment;
 
-public class MainActivity extends DaggerAppCompatActivity {
+public class MainActivity extends DaggerAppCompatActivity implements View.OnClickListener {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -72,12 +74,15 @@ public class MainActivity extends DaggerAppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.login_container, new LoginFragment(), "Login")
                 .commit();
-
+//
+//
         userManager.getUser().observe(this, user -> {
             if(user != null){
-                getSupportFragmentManager().beginTransaction()
-                        .remove(getSupportFragmentManager().findFragmentByTag("Login"))
-                        .commit();
+//                if(getSupportFragmentManager().findFragmentByTag("login").isVisible()) {
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(getSupportFragmentManager().findFragmentByTag("Login"))
+                            .commit();
+//                }
             }
             else{
                 getSupportFragmentManager().beginTransaction()
@@ -86,10 +91,19 @@ public class MainActivity extends DaggerAppCompatActivity {
             }
         });
 
-
+        binding.bottomNav.menuHome.setSelected(true);
+        binding.bottomNav.menuHome.setOnClickListener(this);
+        binding.bottomNav.menu27.setOnClickListener(this);
+        binding.bottomNav.menuAudio.setOnClickListener(this);
+        binding.bottomNav.menuVideo.setOnClickListener(this);
+        binding.bottomNav.menuMore.setOnClickListener(this);
 
 
         initOtherViews();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new FeedFragment(), "Feed")
+                .commit();
     }
 
     @Override
@@ -167,6 +181,47 @@ public class MainActivity extends DaggerAppCompatActivity {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    private void showContent(DaggerFragment fragment, String tag){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment, tag)
+                .commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == binding.bottomNav.menuHome.getId()){
+//            bottomSelector(binding.bottomNav.menuHome.getId());
+//            layout = findViewById(R.id.top_play);
+//            layout.setVisibility(View.INVISIBLE);
+            showContent(FeedFragment.getInstance(), "Feed");
+        }
+        else if(v.getId() == binding.bottomNav.menu27.getId()){
+//            bottomSelector(binding.bottomNav.menu27.getId());
+//            layout = findViewById(R.id.top_play);
+//            layout.setVisibility(View.INVISIBLE);
+            showContent(HoopFragment.getInstance(), "Listen");
+        }
+        else if(v.getId() == binding.bottomNav.menuAudio.getId()){
+//            bottomSelector(binding.bottomNav.menuAudio.getId());
+//            layout = findViewById(R.id.top_play);
+//            layout.setVisibility(View.INVISIBLE);
+            showContent(ProfileFragment.getInstance(), "Audio");
+        }
+        else if(v.getId() == binding.bottomNav.menuVideo.getId()){
+//            bottomSelector(binding.bottomNav.menuVideo.getId());
+//            layout = findViewById(R.id.top_play);
+//            layout.setVisibility(View.INVISIBLE);
+            showContent(NotifFragment.getInstance(), "Notifications");
+        }
+        else if(v.getId() == binding.bottomNav.menuMore.getId()){
+//            bottomSelector(binding.bottomNav.menuMore.getId());
+//            layout = findViewById(R.id.top_play);
+//            layout.setVisibility(View.INVISIBLE);
+            showContent(SettingsFragment.getInstance(), "Settings");
         }
     }
 }

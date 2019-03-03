@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.appsolutions"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -109,14 +109,15 @@ dependencies {
     //        exclude group: "com.android.support"
 
     //    }
-    implementation 'androidx.fragment:fragment:1.0.0-beta01'
+    implementation "com.android.support:support-fragment:${rootProject.ext.glideVersion}"
+
 
     //Exoplayer
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
-    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+//    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
+//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
+//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
+//    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
+//    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-storage:16.0.5'

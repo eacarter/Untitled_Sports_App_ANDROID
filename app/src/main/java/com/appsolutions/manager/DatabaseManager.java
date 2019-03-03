@@ -5,9 +5,12 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.appsolutions.R;
+import com.appsolutions.register.RegisterPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,6 +29,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 public class DatabaseManager {
 
@@ -43,7 +47,7 @@ public class DatabaseManager {
     }
 
 
-    public void initializeUser(FirebaseUser firebaseUser){
+    public void initializeUser(FirebaseAuth firebaseAuth, Map<String, Object> map, FragmentManager manager ){
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("First Name", "");
         userInfo.put("Last Name", "");
@@ -53,6 +57,7 @@ public class DatabaseManager {
         userInfo.put("height", "");
         userInfo.put("weight", "");
         userInfo.put("age", "");
+        userInfo.put("about", "");
         userInfo.put("profile_image", "");
         userInfo.put("gender", "");
         userInfo.put("dominant-hand", "");
@@ -62,14 +67,22 @@ public class DatabaseManager {
         userInfo.put("endorsements", Arrays.asList());
         userInfo.put("Friends", Arrays.asList());
         userInfo.put("Average Rating", 0);
+        userInfo.put("squad", Arrays.asList());
 
         database.
                 collection("Users").
-                document(firebaseUser.getUid()).
+                document(firebaseAuth.getCurrentUser().getUid()).
                 set(userInfo, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+
+                    updateUser(firebaseAuth.getCurrentUser()).update(map);
+
+                    manager.beginTransaction()
+                            .replace(R.id.login_container, new RegisterPhotoFragment(), "RegisterPhoto")
+                            .addToBackStack("RegisterPhoto")
+                            .commit();
                     Log.d("User", "User Created");
                 }
                 else{
@@ -81,6 +94,11 @@ public class DatabaseManager {
 
     public DocumentReference updateUser(FirebaseUser firebaseUser){
         DocumentReference user = database.collection("Users").document(firebaseUser.getUid());
+        return user;
+    }
+
+    public DocumentReference getUser(String id){
+        DocumentReference user = database.collection("Users").document(id);
         return user;
     }
 

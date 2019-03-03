@@ -77,15 +77,9 @@ public class UserManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful() && task.isComplete()) {
                             Log.d(TAG, "createUserWithEmail:success");
-                            databaseManager.initializeUser(firebaseAuth.getCurrentUser());
+                            databaseManager.initializeUser(firebaseAuth, map, manager);
                             firebaseUser.setValue(firebaseAuth.getCurrentUser());
 
-                            databaseManager.updateUser(firebaseAuth.getCurrentUser()).update(map);
-
-                            manager.beginTransaction()
-                                    .replace(R.id.login_container, new RegisterPhotoFragment(), "RegisterPhoto")
-                                    .addToBackStack("RegisterPhoto")
-                                    .commit();
                         } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(activity, "Authentication failed.",

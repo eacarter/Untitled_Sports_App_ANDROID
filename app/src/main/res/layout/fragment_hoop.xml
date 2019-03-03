@@ -1,0 +1,172 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.appsolutions.hoop.HoopViewModel"/>
+
+        <variable
+            name="viewModelHoop"
+            type="com.appsolutions.hoop.HoopViewModel"/>
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/current_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/current_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Current Game"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/current_game_icon"
+            app:layout_constraintStart_toEndOf="@id/current_game_icon"
+            app:layout_constraintTop_toTopOf="@id/current_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+        <ImageView
+            android:id="@+id/find_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_game_icon"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/find_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Find Game"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/find_game_icon"
+            app:layout_constraintStart_toEndOf="@id/find_game_icon"
+            app:layout_constraintTop_toTopOf="@id/find_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+        <ImageView
+            android:id="@+id/create_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/find_game_icon"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/create_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Create Game"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/create_game_icon"
+            app:layout_constraintStart_toEndOf="@id/create_game_icon"
+            app:layout_constraintTop_toTopOf="@id/create_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+        <ImageView
+            android:id="@+id/quick_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/create_game_icon"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/quick_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Quick Play"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/quick_game_icon"
+            app:layout_constraintStart_toEndOf="@id/quick_game_icon"
+            app:layout_constraintTop_toTopOf="@id/quick_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+        <ImageView
+            android:id="@+id/competitive_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quick_game_icon"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/competitive_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Competitive"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/competitive_game_icon"
+            app:layout_constraintStart_toEndOf="@id/competitive_game_icon"
+            app:layout_constraintTop_toTopOf="@id/competitive_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+        <ImageView
+            android:id="@+id/squad_game_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintHeight_percent=".12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/competitive_game_icon"
+            app:layout_constraintWidth_percent=".25" />
+
+        <TextView
+            android:id="@+id/squad_game_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="My Squad"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/squad_game_icon"
+            app:layout_constraintStart_toEndOf="@id/squad_game_icon"
+            app:layout_constraintTop_toTopOf="@id/squad_game_icon"
+            app:layout_constraintWidth_percent=".6" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

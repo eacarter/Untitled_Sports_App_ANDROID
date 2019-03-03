@@ -24,8 +24,32 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <TextView
+            android:id="@+id/settings_notif"
+            android:text="Notification"
+            android:textSize="24dp"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/settings_account"/>
 
+        <TextView
+            android:id="@+id/settings_privacy"
+            android:text="Privacy"
+            android:textSize="24dp"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/settings_notif"/>
 
+        <TextView
+            android:id="@+id/settings_logout"
+            android:text="Logout"
+            android:textSize="24dp"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/settings_privacy"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

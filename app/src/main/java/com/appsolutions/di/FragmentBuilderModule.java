@@ -1,9 +1,14 @@
 package com.appsolutions.di;
 
+import com.appsolutions.feed.FeedFragment;
+import com.appsolutions.hoop.HoopFragment;
 import com.appsolutions.login.LoginFragment;
+import com.appsolutions.notification.NotifFragment;
+import com.appsolutions.profile.ProfileFragment;
 import com.appsolutions.register.RegisterAdditionalFragment;
 import com.appsolutions.register.RegisterFragment;
 import com.appsolutions.register.RegisterPhotoFragment;
+import com.appsolutions.setting.SettingsFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -32,5 +37,20 @@ abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract RegisterPhotoFragment bindRegisterPhotoFragment();
+
+    @ContributesAndroidInjector
+    abstract SettingsFragment bindSettingsFragment();
+
+    @ContributesAndroidInjector
+    abstract NotifFragment bindNotifFragment();
+
+    @ContributesAndroidInjector
+    abstract FeedFragment bindFeedFragment();
+
+    @ContributesAndroidInjector
+    abstract HoopFragment bindHoopFragment();
+
+    @ContributesAndroidInjector
+    abstract ProfileFragment bindProfileFragment();
 
 }

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.appsolutions.profile.ProfileViewModel"/>
+
+        <variable
+            name="viewModelProfile"
+            type="com.appsolutions.profile.ProfileViewModel"/>
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_launcher"
+            android:layout_margin="10dp"
+            app:layout_constraintWidth_percent=".37"
+            app:layout_constraintHeight_percent=".11"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/profile_image_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to change"
+            android:layout_margin="5dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintEnd_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_image"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:text="Username"
+            android:textSize="24dp"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/profile_progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="30dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:progress="25"
+            app:layout_constraintStart_toStartOf="@id/profile_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintHeight_percent=".03"
+            app:layout_constraintWidth_percent=".48"/>
+
+        <TextView
+            android:id="@+id/profile_progress_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="@id/profile_progress"
+            app:layout_constraintTop_toBottomOf="@id/profile_progress"/>
+
+        <TextView
+            android:id="@+id/profile_progress_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@id/profile_progress_action"
+            app:layout_constraintTop_toBottomOf="@id/profile_progress"/>
+
+        <TextView
+            android:id="@+id/profile_progress_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000000"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@id/profile_progress_space"
+            app:layout_constraintTop_toBottomOf="@id/profile_progress"/>
+
+        <TextView
+            android:id="@+id/profile_about_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="About Me"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_change"/>
+
+        <TextView
+            android:id="@+id/profile_about_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:text="edit"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@id/profile_about_label"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_change"/>
+
+        <TextView
+            android:id="@+id/profile_about_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/loren"
+            android:textSize="18sp"
+            android:layout_margin="20dp"
+            android:maxLines="4"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_about_label"/>
+
+        <TextView
+            android:id="@+id/profile_squad_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Squad"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_about_text"/>
+
+        <RelativeLayout
+            android:id="@+id/profile_squad_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/profile_about_text"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintStart_toStartOf="@id/profile_about_text"
+            app:layout_constraintTop_toBottomOf="@id/profile_squad_label"
+            tools:itemCount="3"
+            tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+            tools:listitem="@layout/squad_list_item"
+            tools:orientation="horizontal"
+            tools:scrollbars="horizontal"
+            tools:spanCount="3" />
+
+        <TextView
+            android:id="@+id/profile_squad_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Go to squad page"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_squad_list"/>
+
+        <TextView
+            android:id="@+id/profile_history_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="History"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_squad_page"/>
+
+        <RelativeLayout
+            android:id="@+id/profile_history_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintEnd_toEndOf="@id/profile_about_text"
+            app:layout_constraintStart_toStartOf="@id/profile_about_text"
+            app:layout_constraintTop_toBottomOf="@id/profile_history_label" />
+
+        <TextView
+            android:id="@+id/profile_history_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Full History"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_history_list"/>
+
+        <TextView
+            android:id="@+id/profile_post_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Post"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_history_page"/>
+
+        <RelativeLayout
+            android:id="@+id/profile_post_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintEnd_toEndOf="@id/profile_about_text"
+            app:layout_constraintStart_toStartOf="@id/profile_about_text"
+            app:layout_constraintTop_toBottomOf="@id/profile_post_label" />
+
+        <TextView
+            android:id="@+id/profile_post_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="See All Post"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_post_list"/>
+
+        <TextView
+            android:id="@+id/profile_friends_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Friends"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_post_page"/>
+
+        <RelativeLayout
+            android:id="@+id/profile_friends_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintHeight_percent=".1"
+            app:layout_constraintEnd_toEndOf="@id/profile_about_text"
+            app:layout_constraintStart_toStartOf="@id/profile_about_text"
+            app:layout_constraintTop_toBottomOf="@id/profile_friends_label" />
+
+        <TextView
+            android:id="@+id/profile_friends_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="See All Friends"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_friends_list"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
