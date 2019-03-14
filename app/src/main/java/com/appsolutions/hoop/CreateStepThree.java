@@ -1,13 +1,14 @@
 package com.appsolutions.hoop;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.appsolutions.R;
-import com.appsolutions.databinding.FragmentFeedBinding;
-import com.appsolutions.databinding.FragmentHoopBinding;
+import com.appsolutions.databinding.FragmentCreateGameMainBinding;
+import com.appsolutions.databinding.FragmentCreateGameStep3Binding;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
 
-public class HoopFragment extends DaggerFragment implements View.OnClickListener{
+public class CreateStepThree extends DaggerFragment{
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -27,17 +28,17 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
     @Inject
     Picasso picasso;
 
-    private FragmentHoopBinding binding;
-    private HoopViewModel viewModel;
+    private FragmentCreateGameStep3Binding binding;
+    private CreateGameViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
 
     @Inject
-    public HoopFragment() {
+    public CreateStepThree() {
         //Required empty public constructor
     }
 
-    public static HoopFragment getInstance() {
-        return new HoopFragment();
+    public static CreateStepThree getInstance() {
+        return new CreateStepThree();
     }
 
     @Override
@@ -49,12 +50,10 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this,
-                viewModelFactory).get(HoopViewModel.class);
+                viewModelFactory).get(CreateGameViewModel.class);
         lifecycleOwner = this;
 
-        binding.createGameTab.setOnClickListener(this);
-
-        binding.setViewModelHoop(viewModel);
+        binding.setViewModelCreateGame(viewModel);
     }
 
     @Override
@@ -63,9 +62,10 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_hoop, container, false);
+                R.layout.fragment_create_game_step3, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
+
 
 
 
@@ -77,14 +77,5 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
         super.onResume();
         viewModel.resume();
     }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == binding.createGameTab.getId()){
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, CreateGameFragment.getInstance())
-                    .commit();
-        }
-    }
 }
+

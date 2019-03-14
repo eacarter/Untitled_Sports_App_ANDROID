@@ -1,31 +1,24 @@
-package com.appsolutions.feed;
+package com.appsolutions.hoop;
 
 import android.app.Activity;
 
-import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
-import com.appsolutions.models.Feed;
-import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-public class FeedViewModel extends BaseViewModel {
+public class CreateGameViewModel extends BaseViewModel {
 
     private UserManager userManager;
-    private DatabaseManager databaseManager;
     private UserMediatorLiveData userMediatorLiveData;
 
     @Inject
-    public FeedViewModel(UserManager userManager, DatabaseManager databaseManager){
+    public CreateGameViewModel(UserManager userManager){
         this.userManager = userManager;
-        this.databaseManager = databaseManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
     }
 
@@ -38,21 +31,9 @@ public class FeedViewModel extends BaseViewModel {
         userManager.SignIn(email, pass, activity);
     }
 
-    public void uploadFeedItem(String id, Feed feed){
-        databaseManager.uploadFeedItem(id, feed);
-    }
-
-    public LiveData<List<Feed>> getFeedItems(String id){
-       return databaseManager.getFeedItems(id);
-    }
-
-    public LiveData<List<String>> getFriends(FirebaseUser user){
-        return databaseManager.getFriends(user);
-    }
-
-    public LiveData<List<User>> getUsers(){
-        return databaseManager.getUserItems();
-    }
+//    public void register(String email, String pass, Activity activity){
+//        userManager.Register(email, pass, activity);
+//    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

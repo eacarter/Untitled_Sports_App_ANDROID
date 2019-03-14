@@ -2,6 +2,7 @@ package com.appsolutions.profile;
 
 import android.app.Activity;
 
+import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,11 +15,13 @@ import androidx.lifecycle.MediatorLiveData;
 public class ProfileViewModel extends BaseViewModel {
 
     private UserManager userManager;
+    private DatabaseManager databaseManager;
     private UserMediatorLiveData userMediatorLiveData;
 
     @Inject
-    public ProfileViewModel(UserManager userManager){
+    public ProfileViewModel(UserManager userManager, DatabaseManager databaseManager){
         this.userManager = userManager;
+        this.databaseManager = databaseManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
     }
 
@@ -27,13 +30,9 @@ public class ProfileViewModel extends BaseViewModel {
 
     }
 
-    public void login(String email, String pass, Activity activity){
-        userManager.SignIn(email, pass, activity);
+    public void getUserData(String id){
+        databaseManager.getUser(id);
     }
-
-//    public void register(String email, String pass, Activity activity){
-//        userManager.Register(email, pass, activity);
-//    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

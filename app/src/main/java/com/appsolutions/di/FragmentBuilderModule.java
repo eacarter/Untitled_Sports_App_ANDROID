@@ -1,6 +1,11 @@
 package com.appsolutions.di;
 
+import com.appsolutions.feed.CommentFragment;
 import com.appsolutions.feed.FeedFragment;
+import com.appsolutions.hoop.CreateGameFragment;
+import com.appsolutions.hoop.CreateStepOne;
+import com.appsolutions.hoop.CreateStepThree;
+import com.appsolutions.hoop.CreateStepTwo;
 import com.appsolutions.hoop.HoopFragment;
 import com.appsolutions.login.LoginFragment;
 import com.appsolutions.notification.NotifFragment;
@@ -52,5 +57,20 @@ abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract ProfileFragment bindProfileFragment();
+
+    @ContributesAndroidInjector
+    abstract CreateGameFragment bindCreateGameFragment();
+
+    @ContributesAndroidInjector
+    abstract CreateStepOne bindCreateStepOne();
+
+    @ContributesAndroidInjector
+    abstract CreateStepTwo bindCreateStepTwo();
+
+    @ContributesAndroidInjector
+    abstract CreateStepThree bindCreateStepThree();
+
+    @ContributesAndroidInjector
+    abstract CommentFragment bindCommentFragment();
 
 }

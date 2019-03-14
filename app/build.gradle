@@ -111,6 +111,9 @@ dependencies {
     //    }
     implementation "com.android.support:support-fragment:${rootProject.ext.glideVersion}"
 
+    implementation ("com.github.bumptech.glide:glide:4.9.0") {
+        exclude group: "com.android.support"
+    }
 
     //Exoplayer
 //    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'

@@ -8,6 +8,13 @@ import android.view.ViewGroup;
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentHoopBinding;
 import com.appsolutions.databinding.FragmentProfileBinding;
+import com.appsolutions.manager.DatabaseManager;
+import com.appsolutions.manager.UserManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -27,9 +34,16 @@ public class ProfileFragment extends DaggerFragment{
     @Inject
     Picasso picasso;
 
+    @Inject
+    DatabaseManager databaseManager;
+
+    @Inject
+    UserManager userManager;
+
     private FragmentProfileBinding binding;
     private ProfileViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
+    private FirebaseAuth firebaseAuth;
 
     @Inject
     public ProfileFragment() {
@@ -64,6 +78,27 @@ public class ProfileFragment extends DaggerFragment{
                 R.layout.fragment_profile, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
+
+//        viewModel.getUser().observe(this, user ->{
+
+
+
+        databaseManager.getUser(userManager.getUser().getValue().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Glide.with(getContext())
+                        .load(documentSnapshot.get("image"))
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(binding.profileImage);
+
+                binding.profileName.setText(userManager.getUser().getValue().getEmail().split("@")[0]);
+//                binding.profileAboutText.setText(documentSnapshot.get("about").toString());
+            }
+        });
+
+//        });
+
+
 
 
 

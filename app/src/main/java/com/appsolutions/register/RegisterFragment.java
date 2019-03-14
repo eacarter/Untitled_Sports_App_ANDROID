@@ -20,11 +20,13 @@ import android.widget.Toast;
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentRegisterBinding;
 import com.appsolutions.manager.LocationManager;
+import com.appsolutions.manager.UserManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,6 +54,9 @@ public class RegisterFragment extends DaggerFragment{
 
     @Inject
     LocationManager locationManager;
+
+    @Inject
+    UserManager userManager;
 
     private FragmentRegisterBinding binding;
     private RegisterViewModel viewModel;
@@ -187,6 +192,7 @@ public class RegisterFragment extends DaggerFragment{
                             userInitInfo.put("dominant-hand", binding.registerHand.getSelectedItem().toString());
                             userInitInfo.put("latitude", latitude);
                             userInitInfo.put("longitude", longitude);
+                            userInitInfo.put("Friends", Arrays.asList());
 
                             viewModel.register(binding.registerEmail.getText().toString(),
                                     binding.registerPass.getText().toString(), userInitInfo,

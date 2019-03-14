@@ -5,6 +5,7 @@ import android.content.Context;
 import com.appsolutions.LibApplication;
 import com.appsolutions.util.EncodingInterceptor;
 import com.appsolutions.util.RuntimeTypeJsonAdapterFactory;
+import com.bumptech.glide.Glide;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
@@ -109,7 +110,6 @@ class AppModule {
                 .downloader(new OkHttp3Downloader(okHttpClient))
                 .build();
     }
-
 
 
 //    @Singleton @Provides /*@Named("notes")*/

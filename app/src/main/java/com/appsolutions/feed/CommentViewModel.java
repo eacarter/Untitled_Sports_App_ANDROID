@@ -5,7 +5,6 @@ import android.app.Activity;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.models.Feed;
-import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -16,14 +15,14 @@ import javax.inject.Inject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-public class FeedViewModel extends BaseViewModel {
+public class CommentViewModel extends BaseViewModel {
 
     private UserManager userManager;
     private DatabaseManager databaseManager;
     private UserMediatorLiveData userMediatorLiveData;
 
     @Inject
-    public FeedViewModel(UserManager userManager, DatabaseManager databaseManager){
+    public CommentViewModel(UserManager userManager, DatabaseManager databaseManager){
         this.userManager = userManager;
         this.databaseManager = databaseManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
@@ -34,25 +33,29 @@ public class FeedViewModel extends BaseViewModel {
 
     }
 
-    public void login(String email, String pass, Activity activity){
-        userManager.SignIn(email, pass, activity);
+//    public void login(String email, String pass, Activity activity){
+//        userManager.SignIn(email, pass, activity);
+//    }
+//
+//    public void uploadFeedItem(String id, Feed feed){
+//        databaseManager.uploadFeedItem(id, feed);
+//    }
+
+    public LiveData<List<Feed>> getCommentItems(String id){
+       return databaseManager.getCommentItems(id);
     }
 
-    public void uploadFeedItem(String id, Feed feed){
-        databaseManager.uploadFeedItem(id, feed);
+    public void sendCommentItem(String id, String postId, Feed feed){
+        databaseManager.addComment(id, postId, feed);
     }
 
-    public LiveData<List<Feed>> getFeedItems(String id){
-       return databaseManager.getFeedItems(id);
+    public void getUserDB(String id){
+        databaseManager.getUser(id);
     }
 
-    public LiveData<List<String>> getFriends(FirebaseUser user){
-        return databaseManager.getFriends(user);
-    }
-
-    public LiveData<List<User>> getUsers(){
-        return databaseManager.getUserItems();
-    }
+//    public void register(String email, String pass, Activity activity){
+//        userManager.Register(email, pass, activity);
+//    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

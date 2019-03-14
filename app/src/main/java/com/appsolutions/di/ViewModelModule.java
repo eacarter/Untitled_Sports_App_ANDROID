@@ -1,7 +1,9 @@
 package com.appsolutions.di;
 
 import com.appsolutions.MainViewModel;
+import com.appsolutions.feed.CommentViewModel;
 import com.appsolutions.feed.FeedViewModel;
+import com.appsolutions.hoop.CreateGameViewModel;
 import com.appsolutions.hoop.HoopViewModel;
 import com.appsolutions.login.LoginViewModel;
 import com.appsolutions.notification.NotifViewModel;
@@ -83,6 +85,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel.class)
     abstract ViewModel bindProfileViewModel(ProfileViewModel profileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateGameViewModel.class)
+    abstract ViewModel bindCreateGameViewModel(CreateGameViewModel createGameViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CommentViewModel.class)
+    abstract ViewModel bindCommentViewModel(CommentViewModel commentViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory viewModelFactory);

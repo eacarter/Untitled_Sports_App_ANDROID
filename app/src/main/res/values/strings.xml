@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="product_image_content_description">Product Image</string>
+    <!--<string name="google_api_key">AIzaSyCGUK0WLvJ7Z4RANKG_gNYUnqlokxi8FTs</string>-->
     <string name="loren">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et nisl luctus, ultricies nisi a, egestas augue. Mauris mollis libero laoreet, aliquet justo vel, dapibus est. Integer fermentum, lacus vel rhoncus tempus, felis est venenatis est, sit amet ultricies ante felis vitae risus. Mauris at enim id dolor pulvinar scelerisque vitae et sem. Pellentesque a tempor ipsum, pretium varius leo. Pellentesque placerat ultrices ex et bibendum. Integer ultrices tincidunt laoreet. Aliquam quis enim nisi. In semper finibus est, id maximus turpis efficitur et. Pellentesque viverra diam in finibus lacinia. Suspendisse posuere porta sodales. Donec rhoncus sem vel quam suscipit commodo. Mauris sit amet arcu sit amet arcu pellentesque vulputate. Pellentesque tempor congue justo ut porttitor. Sed interdum risus vitae eros suscipit, a lobortis nulla hendrerit. Nulla nunc diam, lacinia at malesuada a, imperdiet nec augue.</string>
 </resources>

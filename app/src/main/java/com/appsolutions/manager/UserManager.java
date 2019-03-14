@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.appsolutions.R;
+import com.appsolutions.models.User;
 import com.appsolutions.register.RegisterPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,14 +71,14 @@ public class UserManager {
                 });
     }
 
-    public void Register(String email, String password, Map<String, Object> map, Activity activity, FragmentManager manager){
+    public void Register(String email, String password, Map<String,Object> user, Activity activity, FragmentManager manager){
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful() && task.isComplete()) {
                             Log.d(TAG, "createUserWithEmail:success");
-                            databaseManager.initializeUser(firebaseAuth, map, manager);
+                            databaseManager.initializeUser(firebaseAuth, user, manager);
                             firebaseUser.setValue(firebaseAuth.getCurrentUser());
 
                         } else {

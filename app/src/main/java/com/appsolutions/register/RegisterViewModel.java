@@ -6,6 +6,7 @@ import android.location.Location;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.LocationManager;
 import com.appsolutions.manager.UserManager;
+import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,13 +47,13 @@ public class RegisterViewModel extends BaseViewModel {
         return locationManager.getLocation();
     }
 
-    public void register(String email, String pass, Map<String, Object> map, Activity activity, FragmentManager fragmentManager){
-        userManager.Register(email, pass, map, activity, fragmentManager);
+    public void register(String email, String pass, Map<String, Object> user, Activity activity, FragmentManager fragmentManager){
+        userManager.Register(email, pass, user, activity, fragmentManager);
     }
 
-    public DocumentReference createUser(FirebaseUser user){
-        return databaseManager.updateUser(user);
-    }
+//    public DocumentReference createUser(FirebaseUser firebaseUser, User user){
+//        return databaseManager.updateUser(firebaseUser, user);
+//    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

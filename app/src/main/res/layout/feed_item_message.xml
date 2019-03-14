@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.appsolutions.feed.FeedViewModel"/>
+
+        <variable
+            name="viewModelListen"
+            type="com.appsolutions.feed.FeedViewModel"/>
+
+        <variable
+            name="playing"
+            type="androidx.databinding.ObservableBoolean"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/feed_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/feed_user_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/feed_user_name"
+            app:layout_constraintBottom_toTopOf="@id/feed_content"/>
+
+        <TextView
+            android:id="@+id/feed_user_name"
+            android:text="Username"
+            android:textSize="24sp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/feed_user_image"
+            app:layout_constraintBottom_toBottomOf="@id/feed_user_image"
+            app:layout_constraintStart_toEndOf="@id/feed_user_image"/>
+
+        <TextView
+            android:id="@+id/feed_content"
+            android:text="Username"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/feed_user_name"
+            app:layout_constraintStart_toStartOf="@id/feed_user_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/feed_comment"/>
+
+        <TextView
+            android:id="@+id/feed_share"
+            android:text="Share"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="0dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/darker_gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/feed_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/feed_comment"
+            android:text="Comment"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/feed_share"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
