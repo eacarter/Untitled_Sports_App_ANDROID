@@ -10,6 +10,7 @@ import com.appsolutions.hoop.HoopFragment;
 import com.appsolutions.login.LoginFragment;
 import com.appsolutions.notification.NotifFragment;
 import com.appsolutions.profile.ProfileFragment;
+import com.appsolutions.profile.ProfileThirdFragment;
 import com.appsolutions.register.RegisterAdditionalFragment;
 import com.appsolutions.register.RegisterFragment;
 import com.appsolutions.register.RegisterPhotoFragment;
@@ -72,5 +73,10 @@ abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract CommentFragment bindCommentFragment();
+
+    @ContributesAndroidInjector
+    abstract ProfileThirdFragment bindProfileThirdFragment();
+
+
 
 }

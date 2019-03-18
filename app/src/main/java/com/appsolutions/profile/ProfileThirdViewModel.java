@@ -1,26 +1,26 @@
 package com.appsolutions.profile;
 
-import android.app.Activity;
-
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-public class ProfileViewModel extends BaseViewModel {
+public class ProfileThirdViewModel extends BaseViewModel {
 
     private UserManager userManager;
     private DatabaseManager databaseManager;
     private UserMediatorLiveData userMediatorLiveData;
 
     @Inject
-    public ProfileViewModel(UserManager userManager, DatabaseManager databaseManager){
+    public ProfileThirdViewModel(UserManager userManager, DatabaseManager databaseManager){
         this.userManager = userManager;
         this.databaseManager = databaseManager;
         userMediatorLiveData = new UserMediatorLiveData(userManager.getUser());
@@ -31,13 +31,22 @@ public class ProfileViewModel extends BaseViewModel {
 
     }
 
-    public LiveData<FirebaseUser> getCurrentUser(){
-        return userManager.getUser();
-    }
-
     public LiveData<User> getUserData(String id){
         return databaseManager.getUser(id);
     }
+
+    public void followUser(FirebaseUser firebaseUser, String id){
+        databaseManager.addFriend(firebaseUser, id);
+    }
+
+    public void unfollowUser(FirebaseUser firebaseUser, String id){
+        databaseManager.removeFriend(firebaseUser, id);
+    }
+
+    public LiveData<List<String>> getFollowers(FirebaseUser firebaseUser){
+        return databaseManager.getFriends(firebaseUser);
+    }
+
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

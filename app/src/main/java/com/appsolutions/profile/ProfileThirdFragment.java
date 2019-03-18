@@ -6,16 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appsolutions.R;
-import com.appsolutions.databinding.FragmentHoopBinding;
-import com.appsolutions.databinding.FragmentProfileBinding;
+import com.appsolutions.databinding.FragmentProfileThirdBinding;
+
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Type;
 
 import javax.inject.Inject;
 
@@ -26,7 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
 
-public class ProfileFragment extends DaggerFragment{
+public class ProfileThirdFragment extends DaggerFragment{
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -40,18 +41,24 @@ public class ProfileFragment extends DaggerFragment{
     @Inject
     UserManager userManager;
 
-    private FragmentProfileBinding binding;
-    private ProfileViewModel viewModel;
+    private FragmentProfileThirdBinding binding;
+    private ProfileThirdViewModel viewModel;
     private LifecycleOwner lifecycleOwner;
+    private String items;
+    private String userId;
     private FirebaseAuth firebaseAuth;
 
     @Inject
-    public ProfileFragment() {
+    public ProfileThirdFragment() {
         //Required empty public constructor
     }
 
-    public static ProfileFragment getInstance() {
-        return new ProfileFragment();
+    public static ProfileThirdFragment getInstance(String item) {
+        ProfileThirdFragment profileThirdFragment = new ProfileThirdFragment();
+        Bundle args = new Bundle();
+        args.putString("item",item);
+        profileThirdFragment.setArguments(args);
+        return profileThirdFragment;
     }
 
     @Override
@@ -63,25 +70,35 @@ public class ProfileFragment extends DaggerFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this,
-                viewModelFactory).get(ProfileViewModel.class);
+                viewModelFactory).get(ProfileThirdViewModel.class);
         lifecycleOwner = this;
 
-        viewModel.getCurrentUser().observe(this, currentUser -> {
+        if(getArguments() != null) {
+            userId = getArguments().getString("item");
+        }
 
-            viewModel.getUserData(currentUser.getUid()).observe(this, user ->{
-                Glide.with(getContext())
-                        .load(user.getProfile_image())
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(binding.profileImage);
 
-                binding.profileName.setText(user.getUsername());
-                binding.profileAboutText.setText(user.getAbout());
 
-            });
+        viewModel.getUserData(userId).observe(this, user -> {
+            Glide.with(getContext())
+                    .load(user.getProfile_image())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(binding.profileImage);
 
+            binding.profileName.setText(user.getUsername());
+            binding.profileAboutText.setText(user.getAbout());
         });
 
-        binding.setViewModelProfile(viewModel);
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.getUser().observe(lifecycleOwner, currentUser ->{
+                    viewModel.followUser(currentUser, userId);
+                });
+            }
+        });
+
+        binding.setViewModelProfileThird(viewModel);
     }
 
     @Override
@@ -90,9 +107,11 @@ public class ProfileFragment extends DaggerFragment{
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_profile, container, false);
+                R.layout.fragment_profile_third, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
+
+
 
         return binding.getRoot();
     }
@@ -102,4 +121,10 @@ public class ProfileFragment extends DaggerFragment{
         super.onResume();
         viewModel.resume();
     }
+
+//    private void followerCheck(){
+//        viewModel.getUser().observe(lifecycleOwner, user ->{
+//            viewModel.getFollowers(user).observe(lifecycleOwner, );
+//        });
+//    }
 }

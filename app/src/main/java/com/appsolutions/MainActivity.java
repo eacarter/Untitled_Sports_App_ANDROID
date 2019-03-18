@@ -10,14 +10,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
+import com.appsolutions.adapters.UserAdapter;
 import com.appsolutions.databinding.ActivityMainBinding;
+import com.appsolutions.feed.CommentFragment;
 import com.appsolutions.feed.FeedFragment;
 import com.appsolutions.hoop.HoopFragment;
 import com.appsolutions.login.LoginFragment;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.LocationManager;
 import com.appsolutions.manager.UserManager;
+import com.appsolutions.models.User;
 import com.appsolutions.notification.NotifFragment;
 import com.appsolutions.profile.ProfileFragment;
 import com.appsolutions.setting.SettingsFragment;
@@ -223,5 +228,9 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
 //            layout.setVisibility(View.INVISIBLE);
             showContent(SettingsFragment.getInstance(), "Settings");
         }
+    }
+
+    private void userSearch(){
+
     }
 }

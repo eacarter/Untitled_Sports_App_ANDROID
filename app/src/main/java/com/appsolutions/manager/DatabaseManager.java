@@ -58,8 +58,10 @@ public class DatabaseManager {
 
     public void initializeUser(FirebaseAuth firebaseAuth, Map<String, Object> map, FragmentManager manager) {
         Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("First Name", "");
-        userInfo.put("Last Name", "");
+        userInfo.put("id", "");
+        userInfo.put("username", "");
+        userInfo.put("firstname", "");
+        userInfo.put("lastname", "");
         userInfo.put("city", "");
         userInfo.put("state", "");
         userInfo.put("zipcode", "");
@@ -69,13 +71,13 @@ public class DatabaseManager {
         userInfo.put("about", "");
         userInfo.put("profile_image", "");
         userInfo.put("gender", "");
-        userInfo.put("dominant-hand", "");
+        userInfo.put("dominant_hand", "");
         userInfo.put("latitude", 0.0);
         userInfo.put("longitude", 0.0);
         userInfo.put("medic-info", false);
         userInfo.put("friends", Arrays.asList());
         userInfo.put("endorsements", Arrays.asList());
-        userInfo.put("Average Rating", 0);
+        userInfo.put("average_rating", 0);
         userInfo.put("squad", Arrays.asList());
 
         database.
@@ -90,6 +92,8 @@ public class DatabaseManager {
 
                     database.collection("Users").document(firebaseAuth.getCurrentUser()
                             .getUid()).update("friends", FieldValue.arrayUnion(firebaseAuth.getCurrentUser().getUid()));
+
+                    updateUser(firebaseAuth.getCurrentUser()).update("id", firebaseAuth.getCurrentUser().getUid());
 
                     manager.beginTransaction()
                             .replace(R.id.login_container, new RegisterPhotoFragment(), "RegisterPhoto")
@@ -222,6 +226,23 @@ public class DatabaseManager {
         return friendsList;
     }
 
+    public void findUser(String username){
+        MutableLiveData<List<User>> users = new MutableLiveData<>();
+
+        Query query = database.collection("Users").whereEqualTo("id", username);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot documentSnapshot = task.getResult();
+//                    List<User> usersList = documentSnapshot.getDocuments();
+
+
+                }
+            }
+        });
+    }
+
     public LiveData<List<User>> getUserItems(){
         MutableLiveData<List<User>> users = new MutableLiveData<>();
 
@@ -249,8 +270,20 @@ public class DatabaseManager {
         return database.collection("Game").document(id);
     }
 
-    public Task<DocumentSnapshot> getUser(String id){
-        return database.collection("Users").document(id).get();
+    public LiveData<User> getUser(String id){
+        MutableLiveData<User> user = new MutableLiveData<>();
+
+        database.collection("Users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    user.setValue(documentSnapshot.toObject(User.class));
+                }
+            }
+        });
+
+        return user;
     }
 
 
@@ -265,7 +298,7 @@ public class DatabaseManager {
                         storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                updateUser(user).update("image", uri.toString());
+                                updateUser(user).update("profile_image", uri.toString());
                             }
                         });
                         Toast.makeText(context, "file Uploaded", Toast.LENGTH_SHORT).show();

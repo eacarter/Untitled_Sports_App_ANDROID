@@ -50,8 +50,8 @@ public class FeedViewModel extends BaseViewModel {
         return databaseManager.getFriends(user);
     }
 
-    public LiveData<List<User>> getUsers(){
-        return databaseManager.getUserItems();
+    public LiveData<User> getUserId(String id){
+        return databaseManager.getUser(id);
     }
 
     public LiveData<FirebaseUser> getUser(){

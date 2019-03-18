@@ -99,12 +99,11 @@ public class CommentFragment extends DaggerFragment implements SwipeRefreshLayou
         }
 
         viewModel.getUser().observe(this, user -> {
-            databaseManager.getUser(user.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    username = user.getEmail().split("@")[0];
-                    userPhotoUrl = documentSnapshot.get("image").toString();
-                }
+
+            viewModel.getUserDB(user.getUid());
+            databaseManager.getUser(user.getUid()).observe(this, user1 -> {
+                username = user.getEmail().split("@")[0];
+                userPhotoUrl = user1.getProfile_image();
             });
         });
 

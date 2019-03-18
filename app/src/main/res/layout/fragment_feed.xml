@@ -20,7 +20,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:drawableRight="@android:drawable/ic_menu_search"
             android:hint="Search for users here"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

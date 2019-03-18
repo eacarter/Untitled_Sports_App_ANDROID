@@ -5,11 +5,13 @@ import java.util.List;
 
 public class User {
 
-    private String fName;
-    private String lName;
+    private String id;
+    private String username;
+    private String firstname;
+    private String lastname;
     private String city;
     private String state;
-    private String zipCode;
+    private String zipcode;
     private String height;
     private String weight;
     private String age;
@@ -21,25 +23,58 @@ public class User {
     private double longitude;
     private boolean medic_info;
     private List<String> friends;
-    private List<String> endorsments;
-    private int rating;
+    private List<String> endorsements;
+    private int Average_Rating;
     private List<String> squad;
 
-    public String getfName() {
-        return fName;
+    public String getId() {
+        return id;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getlName() {
-        return lName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setlName(String lName) {
-        this.lName = lName;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public int getAverage_Rating() {
+        return Average_Rating;
+    }
+
+    public void setAverage_Rating(int average_Rating) {
+        Average_Rating = average_Rating;
+    }
+
 
     public String getCity() {
         return city;
@@ -57,13 +92,6 @@ public class User {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
 
     public String getHeight() {
         return height;
@@ -153,20 +181,12 @@ public class User {
         this.friends = friends;
     }
 
-    public List<String> getEndorsments() {
-        return endorsments;
+    public List<String> getEndorsements() {
+        return endorsements;
     }
 
-    public void setEndorsments(List<String> endorsments) {
-        this.endorsments = endorsments;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setEndorsements(List<String> endorsments) {
+        this.endorsements = endorsments;
     }
 
     public List<String> getSquad() {

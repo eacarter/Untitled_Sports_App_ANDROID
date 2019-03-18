@@ -110,7 +110,10 @@ public class FeedAdapter extends RecyclerView.Adapter<BindingViewholder> {
                 public void onClick(View v) {
                     Gson gson = new Gson();
 
-                    fragmentManager.beginTransaction().add(R.id.container, CommentFragment.getInstance(gson.toJson(item))).commit();
+                    fragmentManager.beginTransaction()
+                            .add(R.id.container, CommentFragment.getInstance(gson.toJson(item)))
+                            .addToBackStack("")
+                            .commit();
 //                    feedItem(item.getId(), randomGenerator()).show();
                 }
             });

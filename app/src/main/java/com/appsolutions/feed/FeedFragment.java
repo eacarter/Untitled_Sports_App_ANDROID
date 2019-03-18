@@ -6,16 +6,19 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.appsolutions.R;
+import com.appsolutions.adapters.UserAdapter;
 import com.appsolutions.databinding.FragmentFeedBinding;
 import com.appsolutions.databinding.FragmentNotifBinding;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.models.Feed;
 import com.appsolutions.models.User;
+import com.appsolutions.profile.ProfileThirdFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -84,17 +87,6 @@ public class FeedFragment extends DaggerFragment implements SwipeRefreshLayout.O
                 viewModelFactory).get(FeedViewModel.class);
         lifecycleOwner = this;
 
-        viewModel.getUsers().observe(this, users -> {
-//            List<String> names = new ArrayList<>();
-//
-//            for(int i = 0; i < users.size(); i++){
-//                names.add(users.get(i).getfName());
-//            }
-            ArrayAdapter<User> adapter = new ArrayAdapter<User>(getContext(), android.R.layout.simple_list_item_1, users);
-            binding.userSearch.setThreshold(2);
-            binding.userSearch.setAdapter(adapter);
-        });
-
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +100,24 @@ public class FeedFragment extends DaggerFragment implements SwipeRefreshLayout.O
                 binding.refresher.setRefreshing(true);
                 loadData();
             }
+        });
+
+        databaseManager.getUserItems().observe(this, users -> {
+
+            UserAdapter adapter = new UserAdapter(getContext(), users);
+            binding.userSearch.setThreshold(2);
+            binding.userSearch.setAdapter(adapter);
+            binding.userSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    User user = (User) parent.getItemAtPosition(position);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, ProfileThirdFragment.getInstance(user.getId()))
+                            .addToBackStack("")
+                            .commit();
+                    binding.userSearch.setText("");
+                }
+            });
         });
 
         binding.setViewModelFeed(viewModel);
@@ -181,24 +191,19 @@ public class FeedFragment extends DaggerFragment implements SwipeRefreshLayout.O
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                databaseManager.getUser(userManager.getUser().getValue().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                viewModel.getUserId(userManager.getUser().getValue().getUid()).observe(lifecycleOwner, user -> {
 
                         EditText text = (EditText) view.findViewById(R.id.message_post);
-
-                        String username = userManager.getUser().getValue().getEmail().split("@")[0];
 
                         Feed feed = new Feed();
                         feed.setId(id);
                         feed.setMessage(text.getText().toString());
-                        feed.setUsername(username);
-                        feed.setUserPicture(documentSnapshot.get("image").toString());
+                        feed.setUsername(user.getUsername());
+                        feed.setUserPicture(user.getProfile_image());
                         feed.setTimeStamp(new Date().getTime());
                         viewModel.uploadFeedItem(id, feed);
                         binding.refresher.setRefreshing(true);
                         loadData();
-                    }
                 });
             }
 

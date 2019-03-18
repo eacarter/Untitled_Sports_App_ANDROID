@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
 import com.appsolutions.models.Feed;
+import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -49,8 +50,8 @@ public class CommentViewModel extends BaseViewModel {
         databaseManager.addComment(id, postId, feed);
     }
 
-    public void getUserDB(String id){
-        databaseManager.getUser(id);
+    public LiveData<User> getUserDB(String id){
+         return databaseManager.getUser(id);
     }
 
 //    public void register(String email, String pass, Activity activity){

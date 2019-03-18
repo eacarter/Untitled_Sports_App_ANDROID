@@ -180,8 +180,9 @@ public class RegisterFragment extends DaggerFragment{
                         }
                         else {
                             Map<String, Object> userInitInfo = new HashMap<>();
-                            userInitInfo.put("First Name", binding.registerFirstName.getText().toString());
-                            userInitInfo.put("Last Name", binding.registerLastName.getText().toString());
+                            userInitInfo.put("username", binding.registerEmail.getText().toString().split("@")[0]);
+                            userInitInfo.put("firstname", binding.registerFirstName.getText().toString());
+                            userInitInfo.put("lastname", binding.registerLastName.getText().toString());
                             userInitInfo.put("city", binding.registerCity.getText().toString());
                             userInitInfo.put("state", binding.registerState.getText().toString());
                             userInitInfo.put("zipcode", binding.registerZip.getText().toString());
@@ -189,10 +190,9 @@ public class RegisterFragment extends DaggerFragment{
                             userInitInfo.put("gender", binding.registerGender.getSelectedItem().toString());
                             userInitInfo.put("height", binding.registerHeight.getText().toString());
                             userInitInfo.put("weight", binding.registerWeight.getText().toString());
-                            userInitInfo.put("dominant-hand", binding.registerHand.getSelectedItem().toString());
+                            userInitInfo.put("dominant_hand", binding.registerHand.getSelectedItem().toString());
                             userInitInfo.put("latitude", latitude);
                             userInitInfo.put("longitude", longitude);
-                            userInitInfo.put("Friends", Arrays.asList());
 
                             viewModel.register(binding.registerEmail.getText().toString(),
                                     binding.registerPass.getText().toString(), userInitInfo,
