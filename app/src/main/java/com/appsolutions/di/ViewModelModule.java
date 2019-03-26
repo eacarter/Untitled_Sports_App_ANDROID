@@ -5,6 +5,7 @@ import com.appsolutions.feed.CommentViewModel;
 import com.appsolutions.feed.FeedViewModel;
 import com.appsolutions.hoop.CreateGameViewModel;
 import com.appsolutions.hoop.HoopViewModel;
+import com.appsolutions.hoop.SquadViewModel;
 import com.appsolutions.login.LoginViewModel;
 import com.appsolutions.notification.NotifViewModel;
 import com.appsolutions.profile.ProfileThirdViewModel;
@@ -101,6 +102,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileThirdViewModel.class)
     abstract ViewModel bindProfileThirdViewModel(ProfileThirdViewModel profileThirdViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SquadViewModel.class)
+    abstract ViewModel bindSquadViewModel(SquadViewModel squadViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory viewModelFactory);

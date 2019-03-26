@@ -7,6 +7,7 @@ import com.appsolutions.hoop.CreateStepOne;
 import com.appsolutions.hoop.CreateStepThree;
 import com.appsolutions.hoop.CreateStepTwo;
 import com.appsolutions.hoop.HoopFragment;
+import com.appsolutions.hoop.SquadFragment;
 import com.appsolutions.login.LoginFragment;
 import com.appsolutions.notification.NotifFragment;
 import com.appsolutions.profile.ProfileFragment;
@@ -77,6 +78,7 @@ abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract ProfileThirdFragment bindProfileThirdFragment();
 
-
+    @ContributesAndroidInjector
+    abstract SquadFragment squadFragment();
 
 }

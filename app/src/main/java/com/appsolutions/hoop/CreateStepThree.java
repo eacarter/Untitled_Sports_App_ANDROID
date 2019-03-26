@@ -2,6 +2,7 @@ package com.appsolutions.hoop;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentCreateGameMainBinding;
 import com.appsolutions.databinding.FragmentCreateGameStep3Binding;
+import com.appsolutions.manager.LocationManager;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -27,6 +29,9 @@ public class CreateStepThree extends DaggerFragment{
 
     @Inject
     Picasso picasso;
+
+    @Inject
+    LocationManager locationManager;
 
     private FragmentCreateGameStep3Binding binding;
     private CreateGameViewModel viewModel;
@@ -52,6 +57,10 @@ public class CreateStepThree extends DaggerFragment{
         viewModel = ViewModelProviders.of(this,
                 viewModelFactory).get(CreateGameViewModel.class);
         lifecycleOwner = this;
+
+//        viewModel.getPlaces().observe(this, places -> {
+//            Log.d("create", places.get(0).getPlace().getName());
+//        });
 
         binding.setViewModelCreateGame(viewModel);
     }

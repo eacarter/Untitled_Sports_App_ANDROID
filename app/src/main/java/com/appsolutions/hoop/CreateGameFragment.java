@@ -102,45 +102,34 @@ View.OnClickListener{
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
 //        View view = binding.createViewPager.getChildAt(position);
-
-        if(position == 0) {
-            View view = binding.createViewPager.getChildAt(0);
-            EditText title = (EditText) view.findViewById(R.id.create_game_title);
-            Spinner spinner = (Spinner) view.findViewById(R.id.create_game_game_mode);
-            TextView points = (TextView) view.findViewById(R.id.create_game_point_text);
-            EditText minAge = (EditText) view.findViewById(R.id.create_game_min_age);
-            EditText maxAge = (EditText) view.findViewById(R.id.create_game_max_age);
-            Spinner gender = (Spinner) view.findViewById(R.id.create_game_gender);
-
-            maps.put("id", userManager.getUser().getValue().getUid()+""+randomGenerator());
-            maps.put("title", title.getText().toString());
-            maps.put("game_mode", spinner.getSelectedItem().toString());
-            maps.put("points", points.getText().toString());
-            maps.put("min_age", minAge.getText().toString());
-            maps.put("max_age", maxAge.getText().toString());
-            maps.put("gender", gender.getSelectedItem().toString());
-        }
-        if(position == 1){
-            View view = binding.createViewPager.getChildAt(1);
-            TextView privacy = (TextView) view.findViewById(R.id.create_game_pp_selector);
-            TextView date =  (TextView) view.findViewById(R.id.create_game_date_selector);
-            TextView time =  (TextView) view.findViewById(R.id.create_game_time_selector);
-            TextView zip =  (TextView) view.findViewById(R.id.create_game_zip_selector);
-            TextView location =  (TextView) view.findViewById(R.id.create_game_location_selector);
-
-            maps.put("privacy", privacy.getText().toString());
-            maps.put("game_date", date.getText().toString());
-            maps.put("game_time", time.getText().toString());
-            maps.put("game_zip", zip.getText().toString());
-            maps.put("game_location", location.getText().toString());
-        }
     }
 
     @Override
     public void onPageSelected(int position) {
 //        View view = binding.createViewPager.getChildAt(position);
+        if(binding.createViewPager.getCurrentItem() == 2){
+            View view = binding.createViewPager.getChildAt(1);
+            TextView title = (TextView) view.findViewById(R.id.create_review_title);
+            title.setText(maps.get("title").toString());
+            TextView mode = (TextView) view.findViewById(R.id.create_mode);
+            mode.setText(maps.get("game_mode").toString());
+            TextView points = (TextView) view.findViewById(R.id.create_points);
+            points.setText(maps.get("points").toString());
+            TextView min = (TextView) view.findViewById(R.id.create_min);
+            min.setText(maps.get("min_age").toString());
+            TextView max = (TextView) view.findViewById(R.id.create_max);
+            max.setText(maps.get("max_age").toString());
+            TextView gender = (TextView) view.findViewById(R.id.create_gender);
+            gender.setText(maps.get("gender").toString());
+            TextView date = (TextView) view.findViewById(R.id.create_date);
+            date.setText(maps.get("game_date").toString());
+            TextView time = (TextView) view.findViewById(R.id.create_time);
+            time.setText(maps.get("game_time").toString());
+            TextView location = (TextView) view.findViewById(R.id.create_location);
+            location.setText(maps.get("game_location").toString());
+
+        }
     }
 
     @Override
@@ -151,6 +140,38 @@ View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == binding.createMainNext.getId()){
+            if(binding.createViewPager.getCurrentItem() == 0){
+                View view = binding.createViewPager.getChildAt(0);
+                EditText title = (EditText) view.findViewById(R.id.create_game_title);
+                Spinner spinner = (Spinner) view.findViewById(R.id.create_game_game_mode);
+                TextView points = (TextView) view.findViewById(R.id.create_game_point_text);
+                EditText minAge = (EditText) view.findViewById(R.id.create_game_min_age);
+                EditText maxAge = (EditText) view.findViewById(R.id.create_game_max_age);
+                Spinner gender = (Spinner) view.findViewById(R.id.create_game_gender);
+
+                maps.put("id", userManager.getUser().getValue().getUid()+""+randomGenerator());
+                maps.put("title", title.getText().toString());
+                maps.put("game_mode", spinner.getSelectedItem().toString());
+                maps.put("points", points.getText().toString());
+                maps.put("min_age", minAge.getText().toString());
+                maps.put("max_age", maxAge.getText().toString());
+                maps.put("gender", gender.getSelectedItem().toString());
+            }
+            else if(binding.createViewPager.getCurrentItem() == 1){
+                View view = binding.createViewPager.getChildAt(1);
+                TextView privacy = (TextView) view.findViewById(R.id.create_game_pp_selector);
+                TextView date =  (TextView) view.findViewById(R.id.create_game_date_selector);
+                TextView time =  (TextView) view.findViewById(R.id.create_game_time_selector);
+                TextView zip =  (TextView) view.findViewById(R.id.create_game_zip_selector);
+                TextView location =  (TextView) view.findViewById(R.id.create_game_location_selector);
+
+                maps.put("privacy", privacy.getText().toString());
+                maps.put("game_date", date.getText().toString());
+                maps.put("game_time", time.getText().toString());
+                maps.put("game_zip", zip.getText().toString());
+                maps.put("game_location", location.getText().toString());
+            }
+
             binding.createViewPager.setCurrentItem(binding.createViewPager.getCurrentItem() + 1, true);
         }
     }

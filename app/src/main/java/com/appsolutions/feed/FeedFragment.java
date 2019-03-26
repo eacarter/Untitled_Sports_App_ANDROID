@@ -161,7 +161,7 @@ public class FeedFragment extends DaggerFragment implements SwipeRefreshLayout.O
             viewModel.getFeedItems(userManager.getUser().getValue().getUid()).observe(lifecycleOwner, feed -> {
                 if (feed != null) {
                     feedITEMS = feed;
-                    viewModel.getFriends(userManager.getUser().getValue()).observe(lifecycleOwner, users -> {
+                    viewModel.getFriends(userManager.getUser().getValue().getUid()).observe(lifecycleOwner, users -> {
                         if (users != null) {
                             friendIDs = users;
 

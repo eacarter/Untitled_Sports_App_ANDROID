@@ -116,7 +116,6 @@ public class CreateStepTwo extends DaggerFragment implements View.OnClickListene
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dateDialog = new DatePickerDialog(getContext(), datePickerListener, mYear, mMonth, mDay);
-        dateDialog.getDatePicker().setMaxDate(new Date().getTime());
         dateDialog.show();
     }
 

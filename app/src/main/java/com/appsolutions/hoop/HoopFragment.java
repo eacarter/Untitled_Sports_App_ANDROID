@@ -54,6 +54,8 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
 
         binding.createGameTab.setOnClickListener(this);
 
+        binding.squadGameTab.setOnClickListener(this);
+
         binding.setViewModelHoop(viewModel);
     }
 
@@ -66,8 +68,6 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
                 R.layout.fragment_hoop, container, false);
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
-
-
 
         return binding.getRoot();
     }
@@ -84,6 +84,14 @@ public class HoopFragment extends DaggerFragment implements View.OnClickListener
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, CreateGameFragment.getInstance())
+                    .addToBackStack("create")
+                    .commit();
+        }
+        if(v.getId() == binding.squadGameTab.getId()){
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, SquadFragment.getInstance())
+                    .addToBackStack("squad")
                     .commit();
         }
     }

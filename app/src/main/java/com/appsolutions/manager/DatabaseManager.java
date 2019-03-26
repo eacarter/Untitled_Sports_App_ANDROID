@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.appsolutions.R;
 import com.appsolutions.models.Feed;
+import com.appsolutions.models.Notifications;
 import com.appsolutions.models.User;
 import com.appsolutions.register.RegisterPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,6 +115,18 @@ public class DatabaseManager {
         return user;
     }
 
+    public void updateUserField(FirebaseUser firebaseUser, String field, Object item){
+        database.collection("Users")
+                .document(firebaseUser.getUid()).update(field, item).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d("about", "updated");
+                }
+            }
+        });
+    }
+
     public void uploadFeedItem(String id, Feed item) {
         database.collection("Feed").document(id).set(item).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -141,6 +154,37 @@ public class DatabaseManager {
             }
         });
         return feed;
+    }
+
+    public void addNotification(String id, String notifId, Notifications notifications){
+        database.collection("Users").document(id)
+                .collection("Notifications").document(notifId)
+                .set(notifications).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d("Notifications", "Notification Sent");
+                }
+            }
+        });
+    }
+
+    public LiveData<List<Notifications>> getNotifications(String id){
+        MutableLiveData<List<Notifications>> notifications = new MutableLiveData<>();
+
+        database.collection("Users").document(id).collection("Notifications")
+                .orderBy("timeStamp", Query.Direction.ASCENDING).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<Notifications> list = new ArrayList<>();
+                        for(QueryDocumentSnapshot document: task.getResult()){
+                            list.add(document.toObject(Notifications.class));
+                        }
+                        notifications.setValue(list);
+                    }
+                });
+        return notifications;
     }
 
     public void addComment(String id, String postId, Feed item){
@@ -206,11 +250,11 @@ public class DatabaseManager {
                 });
     }
 
-    public LiveData<List<String>> getFriends(FirebaseUser firebaseUser){
+    public LiveData<List<String>> getFriends(String id){
         MutableLiveData<List<String>> friendsList = new MutableLiveData<>();
 
         database.collection("Users")
-                .document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
@@ -226,21 +270,76 @@ public class DatabaseManager {
         return friendsList;
     }
 
-    public void findUser(String username){
-        MutableLiveData<List<User>> users = new MutableLiveData<>();
+    public void addSquad(FirebaseUser firebaseUser, String userID){
 
-        Query query = database.collection("Users").whereEqualTo("id", username);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        database.collection("Users")
+                .document(firebaseUser.getUid())
+                .update("squad", FieldValue.arrayUnion(userID))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d("Squad", "squad added");
+                        }
+                    }
+                });
+    }
+
+    public void removeSquad(FirebaseUser firebaseUser, String userID){
+
+        database.collection("Users")
+                .document(firebaseUser.getUid())
+                .update("squad", FieldValue.arrayRemove(userID))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d("Squad", "squad removed");
+                        }
+                    }
+                });
+    }
+
+    public LiveData<List<String>> getSquad(String id){
+        MutableLiveData<List<String>> squadList = new MutableLiveData<>();
+
+        database.collection("Users")
+                .document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
-                    QuerySnapshot documentSnapshot = task.getResult();
-//                    List<User> usersList = documentSnapshot.getDocuments();
-
-
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()) {
+                        List<String> list = (List<String>) documentSnapshot.get("squad");
+                        squadList.setValue(list);
+                    }
                 }
             }
         });
+
+        return squadList;
+    }
+
+    public LiveData<List<User>> findUsers(List<String> username, String id){
+        MutableLiveData<List<User>> users = new MutableLiveData<>();
+
+        database.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<User> list = new ArrayList<>();
+                    for(QueryDocumentSnapshot document: task.getResult()){
+                        for(int i = 0; i < username.size(); i++) {
+                            if (username.get(i).contains(document.get("id").toString()) && !username.get(i).contains(id)) {
+                                list.add(document.toObject(User.class));
+                            }
+                        }
+                    }
+                    users.setValue(list);
+                }
+            }
+        });
+        return users;
     }
 
     public LiveData<List<User>> getUserItems(){
@@ -266,8 +365,15 @@ public class DatabaseManager {
         return database.collection("Users").document(firebaseUser.getUid()).update(field, data);
     }
 
-    public DocumentReference createGame(String id){
-        return database.collection("Game").document(id);
+    public void createGame(String id, Map<String, Object> map){
+         database.collection("Game").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+             @Override
+             public void onComplete(@NonNull Task<Void> task) {
+                 if(task.isSuccessful()){
+                     Log.d("Game", "Game Created");
+                 }
+             }
+         });
     }
 
     public LiveData<User> getUser(String id){

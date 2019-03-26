@@ -46,7 +46,7 @@ public class FeedViewModel extends BaseViewModel {
        return databaseManager.getFeedItems(id);
     }
 
-    public LiveData<List<String>> getFriends(FirebaseUser user){
+    public LiveData<List<String>> getFriends(String user){
         return databaseManager.getFriends(user);
     }
 

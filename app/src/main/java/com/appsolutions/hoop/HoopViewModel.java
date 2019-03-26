@@ -8,6 +8,8 @@ import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
@@ -31,8 +33,8 @@ public class HoopViewModel extends BaseViewModel {
 
     }
 
-    public DocumentReference createGame(String id){
-        return databaseManager.createGame(id);
+    public void createGame(String id, Map<String, Object> maps){
+        databaseManager.createGame(id, maps);
     }
 
 //    public void login(String email, String pass, Activity activity){

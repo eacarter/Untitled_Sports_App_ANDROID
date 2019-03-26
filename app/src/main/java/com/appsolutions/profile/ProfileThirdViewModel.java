@@ -2,6 +2,8 @@ package com.appsolutions.profile;
 
 import com.appsolutions.manager.DatabaseManager;
 import com.appsolutions.manager.UserManager;
+import com.appsolutions.models.Feed;
+import com.appsolutions.models.Notifications;
 import com.appsolutions.models.User;
 import com.appsolutions.widget.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,10 +45,29 @@ public class ProfileThirdViewModel extends BaseViewModel {
         databaseManager.removeFriend(firebaseUser, id);
     }
 
-    public LiveData<List<String>> getFollowers(FirebaseUser firebaseUser){
-        return databaseManager.getFriends(firebaseUser);
+    public LiveData<List<String>> getFollowers(String id){
+        return databaseManager.getFriends(id);
     }
 
+    public LiveData<List<Feed>> getFeedItems(String id){
+        return databaseManager.getFeedItems(id);
+    }
+
+    public LiveData<List<String>> getSquad(String id){
+        return databaseManager.getSquad(id);
+    }
+
+    public LiveData<List<String>> getFriendList(String id){
+        return databaseManager.getFriends(id);
+    }
+
+    public LiveData<List<User>>findUsers(List<String> users, String id){
+        return databaseManager.findUsers(users, id);
+    }
+
+    public void addNotification(String id, String notifId, Notifications notifications){
+        databaseManager.addNotification(id, notifId, notifications);
+    }
 
     public LiveData<FirebaseUser> getUser(){
         return userManager.getUser();

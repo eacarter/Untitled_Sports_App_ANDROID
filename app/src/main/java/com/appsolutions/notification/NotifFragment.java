@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentNotifBinding;
+import com.appsolutions.manager.DatabaseManager;
+import com.appsolutions.manager.UserManager;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -16,6 +18,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
 public class NotifFragment extends DaggerFragment{
@@ -26,8 +30,15 @@ public class NotifFragment extends DaggerFragment{
     @Inject
     Picasso picasso;
 
+    @Inject
+    UserManager userManager;
+
+    @Inject
+    DatabaseManager databaseManager;
+
     private FragmentNotifBinding binding;
     private NotifViewModel viewModel;
+    private NotificationAdapter notificationAdapter;
     private LifecycleOwner lifecycleOwner;
 
     @Inject
@@ -51,6 +62,10 @@ public class NotifFragment extends DaggerFragment{
                 viewModelFactory).get(NotifViewModel.class);
         lifecycleOwner = this;
 
+        viewModel.getNotifications(userManager.getUser().getValue().getUid()).observe(this, noti ->{
+            notificationAdapter.setItems(noti);
+        });
+
         binding.setViewModelNotif(viewModel);
     }
 
@@ -64,7 +79,9 @@ public class NotifFragment extends DaggerFragment{
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
 
-
+        binding.notifList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        notificationAdapter = new NotificationAdapter(getContext(), databaseManager, userManager);
+        binding.notifList.setAdapter(notificationAdapter);
 
         return binding.getRoot();
     }

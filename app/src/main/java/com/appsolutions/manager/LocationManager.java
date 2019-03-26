@@ -14,8 +14,16 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,12 +39,15 @@ public class LocationManager {
     private MutableLiveData<Double> longitude;
     private MutableLiveData<Double> latitude;
     private MutableLiveData<Location> location;
+    private PlacesClient placesClient;
     private Context context;
     private SharedPreferences sharedPreferences;
 
     @Inject
     public LocationManager(Context context) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+        Places.initialize(context, "AIzaSyCGUK0WLvJ7Z4RANKG_gNYUnqlokxi8FTs" );
+        placesClient = Places.createClient(context);
         this.context = context;
         longitude = new MutableLiveData<>();
         latitude = new MutableLiveData<>();
@@ -85,5 +96,38 @@ public class LocationManager {
 
     public LiveData<Location> getLocation(){
         return location;
+    }
+
+    public LiveData<List<PlaceLikelihood>> getLocalPlaces(){
+        MutableLiveData<List<PlaceLikelihood>> placeLivedata = new MutableLiveData<>();
+
+        List<Place.Field> places = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.TYPES);
+
+        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.builder(places).build();
+
+        Task<FindCurrentPlaceResponse> task = placesClient.findCurrentPlace(request);
+
+        task.addOnCompleteListener(new OnCompleteListener<FindCurrentPlaceResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
+                List<PlaceLikelihood> placesList = new ArrayList<>();
+
+                if(task.isSuccessful()){
+                    FindCurrentPlaceResponse response = task.getResult();
+                    for(PlaceLikelihood placeLikelihood: response.getPlaceLikelihoods()){
+                        if(placeLikelihood.getPlace().getTypes().contains("gym") ||
+                                placeLikelihood.getPlace().getTypes().contains("park")){
+                            placesList.add(placeLikelihood);
+                        }
+                    }
+                    placeLivedata.setValue(placesList);
+                }
+                else{
+                    Log.d("places", task.getException().getMessage());
+                }
+            }
+        });
+
+        return placeLivedata;
     }
 }
