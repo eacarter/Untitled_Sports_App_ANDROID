@@ -9,9 +9,7 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
-        maven {
-            url "https://public.repo.sygic.com/repository/maven-sygic-releases/"
-        }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
@@ -30,6 +28,9 @@ allprojects {
         maven {
             url 'https://maven.google.com/'
             name 'Google'
+        }
+        flatDir {
+            dirs 'libs'
         }
     }
 }

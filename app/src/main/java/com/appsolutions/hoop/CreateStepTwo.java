@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,13 @@ import android.widget.TimePicker;
 import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentCreateGameMainBinding;
 import com.appsolutions.databinding.FragmentCreateGameStep2Binding;
+import com.appsolutions.manager.UserManager;
+import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.search.DiscoveryRequest;
+import com.here.android.mpa.search.DiscoveryResultPage;
+import com.here.android.mpa.search.ErrorCode;
+import com.here.android.mpa.search.ResultListener;
+import com.here.android.mpa.search.SearchRequest;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -33,13 +41,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
 
-public class CreateStepTwo extends DaggerFragment implements View.OnClickListener{
+public class CreateStepTwo extends DaggerFragment implements View.OnClickListener {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     @Inject
     Picasso picasso;
+
+    @Inject
+    UserManager userManager;
 
     private FragmentCreateGameStep2Binding binding;
     private CreateGameViewModel viewModel;
@@ -71,6 +82,7 @@ public class CreateStepTwo extends DaggerFragment implements View.OnClickListene
         binding.createGameTimeSelector.setOnClickListener(this);
         binding.createGameLocationSelector.setOnClickListener(this);
         binding.createGameZipSelector.setOnClickListener(this);
+
 
         binding.setViewModelCreateGame(viewModel);
     }
@@ -164,5 +176,7 @@ public class CreateStepTwo extends DaggerFragment implements View.OnClickListene
             binding.createGameTimeSelector.setText(hourOfDay+":"+minute);
         }
     };
+
+
 }
 

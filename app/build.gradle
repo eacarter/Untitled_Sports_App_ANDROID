@@ -29,6 +29,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -48,12 +54,11 @@ dependencies {
     api "androidx.annotation:annotation:${rootProject.ext.xAnnotationVersion}"
     api "androidx.preference:preference:${rootProject.ext.xPreferenceVersion}"
     implementation 'com.google.android.libraries.places:places:1.0.0'
+    implementation(name: 'HERE-sdk', ext: 'aar')
 
-    //    implementation("com.sygic.sdk:maps-android:$sygicSdkVersion@aar") {
-
-    //        transitive true
-
-    //    }
+//    implementation("com.sygic.sdk:maps-android:$sygicSdkVersion@aar") {
+//        transitive true
+//    }
 
     //OkHttp, Retrofit, Moshi, Picasso
     implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
@@ -117,25 +122,20 @@ dependencies {
 
     //    }
     implementation "com.android.support:support-fragment:${rootProject.ext.glideVersion}"
-    implementation('com.github.bumptech.glide:glide:4.9.0') {
+
+    implementation ("com.github.bumptech.glide:glide:4.9.0") {
         exclude group: "com.android.support"
     }
 
     //Exoplayer
-
-    //    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
-
-    //    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
-
-    //    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
-
-    //    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
-
-    //    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+//    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
+//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
+//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.4'
+//    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:9.0.0'
+//    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
-    implementation files('libs/HERE-sdk-javadoc.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

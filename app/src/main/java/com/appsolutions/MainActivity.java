@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.appsolutions.models.User;
 import com.appsolutions.notification.NotifFragment;
 import com.appsolutions.profile.ProfileFragment;
 import com.appsolutions.setting.SettingsFragment;
+import com.here.android.mpa.common.MapEngine;
+import com.here.android.mpa.common.OnEngineInitListener;
 
 import java.util.concurrent.Executor;
 
@@ -63,6 +66,7 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
     private Activity activity;
+    private MapEngine mapEngine;
 
     private SharedPreferences sharedPreferences;
 
@@ -109,6 +113,19 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new FeedFragment(), "Feed")
                 .commit();
+
+        mapEngine = MapEngine.getInstance();
+        mapEngine.init(getApplicationContext(), new OnEngineInitListener() {
+            @Override
+            public void onEngineInitializationCompleted(Error error) {
+                if(error == Error.NONE){
+
+                }
+                else{
+                    Log.d("mapEngine", "Failed to initialize");
+                }
+            }
+        });
     }
 
     @Override
@@ -228,9 +245,5 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
 //            layout.setVisibility(View.INVISIBLE);
             showContent(SettingsFragment.getInstance(), "Settings");
         }
-    }
-
-    private void userSearch(){
-
     }
 }

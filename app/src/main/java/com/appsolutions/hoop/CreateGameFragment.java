@@ -1,6 +1,7 @@
 package com.appsolutions.hoop;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,16 @@ import com.appsolutions.R;
 import com.appsolutions.databinding.FragmentCreateGameMainBinding;
 import com.appsolutions.interfaces.CreateGameInterface;
 import com.appsolutions.manager.UserManager;
+import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.search.CategoryFilter;
+import com.here.android.mpa.search.DiscoveryRequest;
+import com.here.android.mpa.search.DiscoveryResultPage;
+import com.here.android.mpa.search.ErrorCode;
+import com.here.android.mpa.search.ExploreRequest;
+import com.here.android.mpa.search.HereRequest;
+import com.here.android.mpa.search.PlaceLink;
+import com.here.android.mpa.search.ResultListener;
+import com.here.android.mpa.search.SearchRequest;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -33,7 +44,7 @@ import androidx.viewpager.widget.ViewPager;
 import dagger.android.support.DaggerFragment;
 
 public class CreateGameFragment extends DaggerFragment implements ViewPager.OnPageChangeListener,
-View.OnClickListener{
+View.OnClickListener, ResultListener<DiscoveryResultPage> {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -72,6 +83,28 @@ View.OnClickListener{
         viewModel = ViewModelProviders.of(this,
                 viewModelFactory).get(CreateGameViewModel.class);
         lifecycleOwner = this;
+
+        viewModel.getUser(userManager.getUser().getValue().getUid()).observe(this, user -> {
+            try{
+                GeoCoordinate device = new GeoCoordinate(user.getLatitude(), user.getLongitude());
+
+                DiscoveryRequest request = new HereRequest()
+                        .setCategoryFilter(new CategoryFilter().add("Basketball"))
+                        .setSearchCenter(device);
+//                        new SearchRequest("Basketball").setSearchCenter(device);
+                request.setCollectionSize(10);
+
+                ErrorCode errorCode = request.execute(this);
+                if(errorCode != ErrorCode.NONE){
+                    Log.d("Create2", errorCode.name().toString());
+                }
+            }
+            catch (IllegalArgumentException e){
+                Log.d("Create2", e.getMessage());
+            }
+
+        });
+
 
         binding.setViewModelCreateGame(viewModel);
     }
@@ -189,6 +222,17 @@ View.OnClickListener{
         return cat.toString();
     }
 
+    @Override
+    public void onCompleted(DiscoveryResultPage discoveryResultPage, ErrorCode errorCode) {
+        if(errorCode != ErrorCode.NONE){
+            Log.d("Create2", errorCode.name().toString());
+        }
+        else{
+            for(PlaceLink item: discoveryResultPage.getPlaceLinks()) {
+                Log.d("Create2", String.valueOf(item.getTitle())+", "+String.valueOf(item.getCategory().getName()));
+            }
+        }
+    }
 //    @Override
 //    public void stepOne(Map<String, Object> map) {
 //
